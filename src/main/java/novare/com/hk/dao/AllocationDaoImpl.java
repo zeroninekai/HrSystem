@@ -18,49 +18,30 @@ public class AllocationDaoImpl implements AllocationDao{
 	DataSource dataSource;
 	
 	public void insertData(Allocation allocation) {
-		
-		String sql = "INSERT INTO allocation "
-				+ "(employee_id, project_id, percent, start_date, end_date) "
-				+ "VALUES( " + "(SELECT id from employee where "
-				+ "CONCAT(employee.first_name, \" \", last_name) = ?), " +
-				"(SELECT id from projects WHERE projects.project_name = ?), " +
-				"?, ?, ?)";
-		
+		String sql = "INSERT INTO allocation(employee_id, project_id, percent, start_date, end_date ) "
+				+ "VALUES( "
+				+ "(SELECT id FROM employee WHERE CONCAT(employee.first_name,"
+				+ "' ', "
+				+ "employee.last_name) = ?), "
+				+ "(SELECT id FROM projects WHERE projects.project_name = ?), "
+				+ "?," + "?," + "?" + ")";
+
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		/*if (allocation.getStart_date().equals(null)){
-			
+		if (allocation.getEnd_date().equals("")) {
 			jdbcTemplate.update(
 					sql,
-					new Object[] { allocation.getEmployee_id(), allocation.getProject_id(), allocation.getPercent(),
-									null, allocation.getEnd_date()
-									}
-							   );
-			}
-			else{
-				jdbcTemplate.update(
-						sql,
-						new Object[] { allocation.getEmployee_id(), allocation.getProject_id(), allocation.getPercent(),
-										allocation.getStart_date(), allocation.getEnd_date()
-										}
-								   );
-			}*/
-		
-		if (allocation.getEnd_date().equals("")){
-			
-		jdbcTemplate.update(
-				sql,
-				new Object[] { allocation.getEmployee_id(), allocation.getProject_id(),
-								allocation.getPercent(), allocation.getStart_date(), null}
-						   );
+					new Object[] { allocation.getEmployee_name(),
+							allocation.getProject(), allocation.getPercent(),
+							allocation.getStart_date(), null, });
 		}
-		else{
+
+		else {
 			jdbcTemplate.update(
 					sql,
-					new Object[] { allocation.getEmployee_id(), allocation.getProject_id(), 
-									allocation.getPercent(), allocation.getStart_date(), 
-									allocation.getEnd_date()
-									}
-							   );
+					new Object[] { allocation.getEmployee_name(),
+							allocation.getProject(), allocation.getPercent(),
+							allocation.getStart_date(),
+							allocation.getEnd_date() });
 		}
 	}
 	
