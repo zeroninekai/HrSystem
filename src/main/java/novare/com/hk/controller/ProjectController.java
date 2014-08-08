@@ -66,7 +66,7 @@ public class ProjectController {
 	public ModelAndView editProject(@RequestParam String id, 
 			@ModelAttribute Project project) {
 		
-		project = projectService.getProject(id);
+		project = projectService.getProject(Integer.parseInt(id));
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("project", project);
@@ -83,7 +83,7 @@ public class ProjectController {
 	@RequestMapping("/deleteProject")
 	public String deleteProject(@RequestParam String id){
 		System.out.println("id = " + id);
-		projectService.deleteData(id);
+		projectService.deleteData(Integer.parseInt(id));
 		return "redirect:/viewProjectList";
 	}
 	

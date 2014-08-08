@@ -62,7 +62,7 @@ public class EmployeeController extends MultiActionController {
 	public ModelAndView editEmployee(@RequestParam String id, 
 			@ModelAttribute Employee employee) {
 		
-		employee = employeeService.getEmployee(id);
+		employee = employeeService.getEmployee(Integer.parseInt(id));
 
 		List<String> status = new ArrayList<String>();  
 		
@@ -87,7 +87,7 @@ public class EmployeeController extends MultiActionController {
 	@RequestMapping("/deleteEmployee")
 	public String deleteEmployee(@RequestParam String id){
 		System.out.println("id = " + id);
-		employeeService.deleteData(id);
+		employeeService.deleteData(Integer.parseInt(id));
 		return "redirect:/viewEmployeeList";
 	}
 	
