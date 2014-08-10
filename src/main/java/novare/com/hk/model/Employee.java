@@ -1,10 +1,14 @@
 package novare.com.hk.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
@@ -23,8 +27,14 @@ public class Employee {
 
 	private String department;
 	private String status;
-	private String start_date;
-	private String date_resigned;
+	
+	@Temporal(TemporalType.DATE)
+	private Date start_date;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(nullable = true)
+	private Date date_resigned;
+	
 	private String position;
 	private double cost;
 	
@@ -38,7 +48,7 @@ public class Employee {
 		return cost;
 	}
 
-	public String getDate_resigned() {
+	public Date getDate_resigned() {
 		return date_resigned;
 	}
 
@@ -70,7 +80,7 @@ public class Employee {
 		return searchquery;
 	}
 
-	public String getStart_date() {
+	public Date getStart_date() {
 		return start_date;
 	}
 
@@ -82,7 +92,7 @@ public class Employee {
 		this.cost = cost;
 	}
 
-	public void setDate_resigned(String date_resigned) {
+	public void setDate_resigned(Date date_resigned) {
 		this.date_resigned = date_resigned;
 	}
 
@@ -114,7 +124,7 @@ public class Employee {
 		this.searchquery = searchquery;
 	}
 
-	public void setStart_date(String start_date) {
+	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
 

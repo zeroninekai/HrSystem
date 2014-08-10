@@ -19,8 +19,8 @@ public class EmployeeExtractor implements ResultSetExtractor<Employee> {
 		employee.setLname(resultSet.getString(3));
 		employee.setDepartment(resultSet.getString(4));
 		employee.setStatus(resultSet.getString(5));
-		employee.setStart_date(resultSet.getString(6));
-		employee.setDate_resigned(resultSet.getString(7));
+/*		employee.setStart_date(resultSet.getString(6));
+		employee.setDate_resigned(resultSet.getString(7));*/
 		employee.setPosition(resultSet.getString(8));
 		employee.setCost(resultSet.getDouble(9));
 		

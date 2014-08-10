@@ -17,8 +17,8 @@ public class ProjectExtractor implements ResultSetExtractor<Project> {
 		project.setId(resultSet.getInt(1));
 		project.setClient(resultSet.getString(2));
 		project.setProject_name(resultSet.getString(3));
-		project.setStart_date(resultSet.getString(4));
-		project.setEnd_date(resultSet.getString(5));
+/*		project.setStart_date(resultSet.getString(4));
+		project.setEnd_date(resultSet.getString(5));*/
 		
 		return project;
 	}

@@ -1,9 +1,14 @@
 package novare.com.hk.model;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 //import java.text.SimpleDateFormat;
@@ -18,8 +23,13 @@ public class Project {
 
 	private String client;
 	private String project_name;
-	private String start_date;
-	private String end_date;
+	
+	@Temporal(TemporalType.DATE)
+	private Date start_date;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(nullable = true)
+	private Date end_date;
 
 	@Transient
 	private String searchquery;
@@ -28,12 +38,7 @@ public class Project {
 		return client;
 	}
 
-	public String getEnd_date() {
-		/*
-		 * if (end_date.equals(null)) { end_date = null; } SimpleDateFormat
-		 * formatter = new SimpleDateFormat("yyyy mm, dd"); return
-		 * formatter.format(this.end_date);
-		 */
+	public Date getEnd_date() {
 		return end_date;
 
 	}
@@ -50,12 +55,7 @@ public class Project {
 		return searchquery;
 	}
 
-	public String getStart_date() {
-		/*
-		 * if (start_date.equals(null)) { start_date = null; } SimpleDateFormat
-		 * formatter = new SimpleDateFormat("yyyy mm, dd"); return
-		 * formatter.format(this.start_date);
-		 */
+	public Date getStart_date() {
 		return start_date;
 	}
 
@@ -63,7 +63,7 @@ public class Project {
 		this.client = client;
 	}
 
-	public void setEnd_date(String end_date) {
+	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
 
@@ -79,7 +79,7 @@ public class Project {
 		this.searchquery = searchquery;
 	}
 
-	public void setStart_date(String start_date) {
+	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
 }
