@@ -17,37 +17,37 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Transactional
 	public void insertData(Employee employee) {
-		employeeRepository.insertData(employee);
+		employeeRepository.save(employee);
 		
 	}
 
 	@Transactional
 	public List<Employee> getEmployeeList() {
-		return employeeRepository.getEmployeeList();
+		return employeeRepository.findAll();
 	}
 
 	@Transactional
 	public void updateData(Employee employee) {
-		employeeRepository.updateData(employee);
+		employeeRepository.save(employee);
 	}
 
 	@Transactional
 	public void deleteData(int id) {
-		employeeRepository.deleteData(id);
+		employeeRepository.delete(id);
 	}
 
 	@Transactional
 	public Employee getEmployee(int id) {
-		return employeeRepository.getEmployee(id);
+		return employeeRepository.findOne(id);
 	}
 
 	@Transactional
 	public List<Employee> searchEmployee(String search_param) {
-		return employeeRepository.searchEmployee(search_param);
+		return null;
 	}
 	
 	@Transactional
 	public List<Employee> filterEmployee(String filterStat){
-		return employeeRepository.filterEmployee(filterStat);
+		return null;
 	}
 }

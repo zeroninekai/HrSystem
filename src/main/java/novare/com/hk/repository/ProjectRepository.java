@@ -1,22 +1,9 @@
 package novare.com.hk.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import novare.com.hk.model.Project;
 
-public interface ProjectRepository {
-	
-	public void insertData(Project project);
+public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
-	public List<Project> getProjectList();
-
-	public void updateData(Project project);
-
-	public void deleteData(int id);
-
-	public Project getProject(int id);
-
-	public List<Project> searchProject(String searchquery);
-
-	public List<Project> filterProject(String project_name);
 }

@@ -17,37 +17,36 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Transactional
 	public void insertData(Project project) {
-		projectRepository.insertData(project);
-		
+		projectRepository.save(project);
 	}
 
 	@Transactional
 	public List<Project> getProjectList() {
-		return projectRepository.getProjectList();
+		return projectRepository.findAll();
 	}
 
 	@Transactional
 	public void updateData(Project project) {
-		projectRepository.updateData(project);;
+		projectRepository.save(project);
 	}
 
 	@Transactional
 	public void deleteData(int id) {
-		projectRepository.deleteData(id);
+		projectRepository.delete(id);
 	}
 
 	@Transactional
 	public Project getProject(int id) {
-		return projectRepository.getProject(id);
+		return projectRepository.findOne(id);
 	}
 
 	@Transactional
 	public List<Project> searchProject(String searchquery){
-		return projectRepository.searchProject(searchquery);
+		return null;
 	}
 	
 	@Transactional
 	public List<Project> filterProject(String project_name){
-		return projectRepository.filterProject(project_name);
+		return null;
 	}
 }
