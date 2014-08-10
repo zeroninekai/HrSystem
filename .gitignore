@@ -106,3 +106,8 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
+
+
+# Maven
+log/
+target/
