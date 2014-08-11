@@ -1,11 +1,13 @@
 package novare.com.hk.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,7 +22,18 @@ public class Project {
 	@Id
 	@GeneratedValue
 	private int id;
+	
+	public List<Allocation> getAllocations() {
+		return allocations;
+	}
 
+	public void setAllocations(List<Allocation> allocations) {
+		this.allocations = allocations;
+	}
+
+	@OneToMany(mappedBy = "project")
+	private List<Allocation> allocations;
+	 
 	private String client;
 	private String project_name;
 	

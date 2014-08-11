@@ -1,83 +1,118 @@
 package novare.com.hk.model;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Allocation {
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
-	
-	private int employee_id;
-	private int project_id;
+
+	@ManyToOne
+	@JoinColumn(name = "employee_id")
+	private Employee employee;
+
+	@ManyToOne
+	@JoinColumn(name = "project_id")
+	private Project project;
+
 	private int percent;
-	private String start_date;
-	private String end_date;
-	
-	private String employee_name;
-	private String project;
-	
+
+	@Temporal(TemporalType.DATE)
+	private Date start_date;
+
+	@Temporal(TemporalType.DATE)
+	private Date end_date;
+
+	@Transient
 	private String searchquery;
-	
-	public String getSearchquery() {
-		return searchquery;
+
+	public Employee getEmployee() {
+		return employee;
 	}
-	public void setSearchquery(String searchquery) {
-		this.searchquery = searchquery;
-	}
-	
+
 	public String getEmployee_name() {
 		return employee_name;
 	}
+
 	public void setEmployee_name(String employee_name) {
 		this.employee_name = employee_name;
 	}
-	
-	public String getProject() {
-		return project;
+
+	public String getProject_name() {
+		return project_name;
 	}
-	public void setProject(String project) {
-		this.project = project;
+
+	public void setProject_name(String project_name) {
+		this.project_name = project_name;
 	}
-	
-	
+
+	public Date getEnd_date() {
+		return end_date;
+	}
+
+	@Transient
+	private String employee_name;
+
+	@Transient
+	private String project_name;
+
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getEmployee_id() {
-		return employee_id;
-	}
-	public void setEmployee_id(int employee_id) {
-		this.employee_id = employee_id;
-	}
-	public int getProject_id() {
-		return project_id;
-	}
-	public void setProject_id(int project_id) {
-		this.project_id = project_id;
-	}
+
 	public int getPercent() {
 		return percent;
 	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public String getSearchquery() {
+		return searchquery;
+	}
+
+	public Date getStart_date() {
+		return start_date;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void setPercent(int percent) {
 		this.percent = percent;
 	}
-	public String getStart_date() {
-		return start_date;
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
-	public void setStart_date(String start_date) {
+
+	public void setSearchquery(String searchquery) {
+		this.searchquery = searchquery;
+	}
+
+	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
-	}
-	public String getEnd_date() {
-		return end_date;
-	}
-	public void setEnd_date(String end_date) {
-		this.end_date = end_date;
 	}
 }

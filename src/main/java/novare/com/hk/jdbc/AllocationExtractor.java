@@ -14,13 +14,13 @@ public class AllocationExtractor implements ResultSetExtractor<Allocation> {
 		
 		Allocation allocation = new Allocation();
 		allocation.setId(resultSet.getInt(1));
-		allocation.setEmployee_id(resultSet.getInt(2));
-		allocation.setProject_id(resultSet.getInt(3));
+/*		allocation.setEmployee_id(resultSet.getInt(2));
+		allocation.setProject_id(resultSet.getInt(3));*/
 		allocation.setPercent(resultSet.getInt(4));
-		allocation.setStart_date(resultSet.getString(5));
-		allocation.setEnd_date(resultSet.getString(6));
-		allocation.setEmployee_name(resultSet.getString(7));
-		allocation.setProject(resultSet.getString(8));
+/*		allocation.setStart_date(resultSet.getString(5));
+		allocation.setEnd_date(resultSet.getString(6));*/
+/*		allocation.setEmployee_name(resultSet.getString(7));
+		allocation.setProject(resultSet.getString(8));*/
 		
 		return allocation;
 	}

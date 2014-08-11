@@ -87,7 +87,7 @@
 					<tr>
 						<%-- <td>${allocation.id}</td> --%>
 						<td>${allocation.employee_name}</td>
-						<td>${allocation.project}</td>
+						<td>${allocation.project_name}</td>
 						<td>${allocation.percent}</td>
 						<td>${allocation.start_date}</td>
 						<td>${allocation.end_date}</td>

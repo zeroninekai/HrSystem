@@ -25,11 +25,11 @@
 						<td>
 							<div class="centerContent">
 								<strong>Employee : *</strong>
-									<form:select path="employee_id" required="required">
+									<form:select path="employee.id" required="required">
 										<form:options items="${employees}" var="employee" itemValue="value" itemLabel="key"/>
 									</form:select>
 								<br /> <strong>Project Name : *</strong>
-									<form:select path="project_id" required="required">
+									<form:select path="project.id" required="required">
 										<form:options items="${projects}" var="project" itemValue="value" itemLabel="key"/>
 									</form:select>
 								<br /> <strong>Percent : *</strong>

@@ -19,7 +19,7 @@ public class AllocationServiceImpl implements AllocationService{
 	@Transactional
 	public void insertData(Allocation allocation) {
 		allocationRepository.save(allocation);
-		
+	
 	}
 
 	@Transactional

@@ -27,7 +27,7 @@ public class AllocationDaoImpl implements AllocationDao{
 				+ "?," + "?," + "?" + ")";
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		if (allocation.getEnd_date().equals("")) {
+/*		if (allocation.getEnd_date().equals("")) {
 			jdbcTemplate.update(
 					sql,
 					new Object[] { allocation.getEmployee_name(),
@@ -41,9 +41,9 @@ public class AllocationDaoImpl implements AllocationDao{
 					new Object[] { allocation.getEmployee_name(),
 							allocation.getProject(), allocation.getPercent(),
 							allocation.getStart_date(),
-							allocation.getEnd_date() });
+							allocation.getEnd_date() });*/
 		}
-	}
+/*	}*/
 	
 
 	public List<Allocation> getAllocationList() {
