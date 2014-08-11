@@ -25,14 +25,12 @@
 						<td>
 							<div class="centerContent">
 								<strong>Employee : *</strong>
-								<%-- <form:input path="employee_id" required="required" /> --%>
-									<form:select path="employee_name" required="required">
-										<form:options items="${map.emp_names}"/>
+									<form:select path="employee_id" required="required">
+										<form:options items="${employees}" var="employee" itemValue="value" itemLabel="key"/>
 									</form:select>
 								<br /> <strong>Project Name : *</strong>
-								<%-- <form:input path="project_id" required="required" /> --%>
-									<form:select path="project" required="required">
-										<form:options items="${map.proj_names}"/>
+									<form:select path="project_id" required="required">
+										<form:options items="${projects}" var="project" itemValue="value" itemLabel="key"/>
 									</form:select>
 								<br /> <strong>Percent : *</strong>
 								<form:input path="percent" required="required" />

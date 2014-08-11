@@ -1,4 +1,4 @@
-/*package novare.com.hk.controller;
+package novare.com.hk.controller;
 
 //import java.util.ArrayList;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import novare.com.hk.services.ProjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,9 +39,9 @@ public class AllocationController {
 	ProjectService projectService;
 	
 	@RequestMapping (value = "/addAllocation", method = RequestMethod.GET)
-	public ModelAndView addAllocation(@ModelAttribute Allocation allocation){
+	public String addAllocation(@ModelAttribute Allocation allocation, Model model){
 
-		List<Employee> employeeList = employeeService.getEmployeeList();
+/*		List<Employee> employeeList = employeeService.getEmployeeList();
 		List<Project> projectList = projectService.getProjectList();
 		
 		List<String> emp_names = new ArrayList<String>();
@@ -62,11 +63,45 @@ public class AllocationController {
 		
 		map.put("employeeList", employeeList);
 		map.put("emp_names", emp_names);
-		map.put("proj_names", proj_names);
+		map.put("proj_names", proj_names);*/
 		
 		System.out.println("Viewing pre-adding page. . .");
 		
-		return new ModelAndView("addAllocation", "map", map);  
+		/********************EMPLOYEES****************************/
+		Set<Map.Entry<String, Integer>> employees; 
+		List<Employee> employeesList = employeeService.getEmployeeList();
+		 final Map<String, Integer> employeesMap = new HashMap<String, Integer>();
+		 if( employeesList != null && !employeesList.isEmpty()){
+		     for(Employee eachEmployee : employeesList ){
+		    	 System.out.println("eto EMP: " + eachEmployee.getFname() + " " + eachEmployee.getLname() + "\n");
+		         if(eachEmployee != null){
+		            employeesMap.put(eachEmployee.getFname()+" "+eachEmployee.getLname(),
+		            				eachEmployee.getId());
+		        }
+		     }
+		  }
+		  employees = employeesMap.entrySet(); 
+		  model.addAttribute("employees", employees);
+		
+		  /************************************************/
+			/********************PROJECTS****************************/
+			Set<Map.Entry<String, Integer>> projects; 
+			List<Project> projectsList = projectService.getProjectList();
+			 final Map<String, Integer> projectsMap = new HashMap<String, Integer>();
+			 if( projectsList != null && ! projectsList.isEmpty()){
+			     for(Project eachProject : projectsList ){
+			         if(eachProject != null){
+			        	 System.out.println("eto proj: " + eachProject.getProject_name() + "\n");
+			            projectsMap.put(eachProject.getProject_name(),
+			            				eachProject.getId());
+			        }
+			     }
+			  }
+			  projects = projectsMap.entrySet(); 
+			  model.addAttribute("projects", projects);
+			
+			  /************************************************/
+		return "addAllocation";  
 	}
 	
 	@RequestMapping("/viewAllocationList")
@@ -104,7 +139,7 @@ public class AllocationController {
 	public ModelAndView editAllocation(@RequestParam String id, 
 			@ModelAttribute Allocation allocation) {
 		
-		allocation = allocationService.getAllocation(id);
+		allocation = allocationService.getAllocation(Integer.parseInt(id));
 		
 		List<Project> projectListView = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
@@ -152,7 +187,7 @@ public class AllocationController {
 	@RequestMapping("/deleteAllocation")
 	public String deleteAllocation(@RequestParam String id){
 		System.out.println("id = " + id);
-		allocationService.deleteData(id);
+		allocationService.deleteData(Integer.parseInt(id));
 		return "redirect:/viewAllocationList";
 	}
 	
@@ -250,4 +285,3 @@ public class AllocationController {
 		return mv;
 	}
 }
-*/

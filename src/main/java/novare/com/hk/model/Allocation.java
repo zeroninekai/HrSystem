@@ -1,8 +1,16 @@
 package novare.com.hk.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Allocation {
 	
+	@Id
+	@GeneratedValue
 	private int id;
+	
 	private int employee_id;
 	private int project_id;
 	private int percent;

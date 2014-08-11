@@ -12,9 +12,9 @@ public interface AllocationService {
 
 	public void updateData(Allocation allocation);
 
-	public void deleteData(String id);
+	public void deleteData(int id);
 
-	public Allocation getAllocation(String id);
+	public Allocation getAllocation(int id);
 
 	public List<Allocation> getViewAlloc();
 	
