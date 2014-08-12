@@ -43,11 +43,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Transactional
 	public List<Employee> searchEmployee(String search_param) {
-		return null;
+		return employeeRepository.searchEmployee(search_param);
 	}
 	
 	@Transactional
 	public List<Employee> filterEmployee(String filterStat){
-		return null;
+		return employeeRepository.filterEmployee(filterStat);
 	}
 }
