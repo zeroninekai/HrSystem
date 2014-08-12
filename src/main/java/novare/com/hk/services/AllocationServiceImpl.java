@@ -54,6 +54,6 @@ public class AllocationServiceImpl implements AllocationService{
 	
 	@Transactional
 	public List<Allocation> searchAllocation(String searchquery){
-		return null;
+		return allocationRepository.searchAllocation(searchquery);
 	}
 }
