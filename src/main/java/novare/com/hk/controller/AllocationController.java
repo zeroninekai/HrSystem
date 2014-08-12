@@ -96,29 +96,31 @@ public class AllocationController {
 		 * setting up employee name and project name for the table JSP View of
 		 * allocations
 		 ***/
-		List<Allocation> allocationList = allocationService.getAllocationList();
-		for (Allocation a : allocationList) {
-			a.setEmployee_name(a.getEmployee().getFname() + " "
-					+ a.getEmployee().getLname());
-			a.setProject_name(a.getProject().getProject_name());
-		}
+			List<Allocation> allocationList = allocationService.getAllocationList();
+			if(allocationList != null){
+				for (Allocation a : allocationList) {
+					a.setEmployee_name(a.getEmployee().getFname() + " "
+							+ a.getEmployee().getLname());
+					a.setProject_name(a.getProject().getProject_name());
+				}
+			}
 		/**********************************************************************/
 
-		/***** for project names under filter dropdown *****/
-		List<Project> projectList = projectService.getProjectList();
-		List<String> proj_names = new ArrayList<String>();
-		List<String> names = new ArrayList<String>();
-		for (Project p : projectList) {
-			proj_names.add(p.getProject_name());
-		}
-		Set<String> se = new HashSet<String>(proj_names);
-		proj_names.clear();
-		proj_names = new ArrayList<String>(se);
-		for (Object obj : proj_names) {
-			names.add(obj.toString());
-		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		Collections.sort(names);
+		/***** 	for project names under filter dropdown	 *****/
+			List<Project> projectList = projectService.getProjectList();
+			List<String> proj_names = new ArrayList<String>();
+			List<String> names = new ArrayList<String>();
+			for (Project p : projectList) {
+				proj_names.add(p.getProject_name());
+			}
+			Set<String> se = new HashSet<String>(proj_names);
+			proj_names.clear();
+			proj_names = new ArrayList<String>(se);
+			for (Object obj : proj_names) {
+				names.add(obj.toString());
+			}
+			Map<String, Object> map = new HashMap<String, Object>();
+			Collections.sort(names);
 		/*************************************************/
 
 		map.put("names", names);
@@ -129,30 +131,47 @@ public class AllocationController {
 
 	@RequestMapping("/editAllocation")
 	public ModelAndView editAllocation(@RequestParam String id,
-			@ModelAttribute Allocation allocation) {
+			@ModelAttribute Allocation allocation, Model model) {
 
 		allocation = allocationService.getAllocation(Integer.parseInt(id));
-
-		List<Project> projectListView = projectService.getProjectList();
-		List<String> proj_names = new ArrayList<String>();
-		List<String> names = new ArrayList<String>();
-
-		for (Project p : projectListView) {
-			proj_names.add(p.getProject_name());
-		}
-
-		Set<String> uniqueNames = new HashSet<String>(proj_names);
-		proj_names.clear();
-
-		proj_names = new ArrayList<String>(uniqueNames);
-
-		for (Object obj : proj_names) {
-			names.add(obj.toString());
-		}
+		allocation.setEmployee_name(allocation.getEmployee().getFname() + " " + allocation.getEmployee().getLname());
+		allocation.setProject_name(allocation.getProject().getProject_name());
+		
+		/**			Remove duplicate names from projects list			***/
+			List<Project> projectListView = projectService.getProjectList();
+			List<String> proj_names = new ArrayList<String>();
+			List<String> names = new ArrayList<String>();
+			for (Project p : projectListView) {
+				proj_names.add(p.getProject_name());
+			}
+			Set<String> uniqueNames = new HashSet<String>(proj_names);
+			proj_names.clear();
+			proj_names = new ArrayList<String>(uniqueNames);
+			for (Object obj : proj_names) {
+				names.add(obj.toString());
+			}
+		/*****************************************************************/
+			
+			Set<Map.Entry<String, Integer>> projects;
+			List<Project> projectsList = projectService.getProjectList();
+			final Map<String, Integer> projectsMap = new HashMap<String, Integer>();
+			if (projectsList != null && !projectsList.isEmpty()) {
+				for (Project eachProject : projectsList) {
+					if (eachProject != null) {
+						System.out.println("eto proj: "
+								+ eachProject.getProject_name() + "\n");
+						projectsMap.put(eachProject.getProject_name(),
+								eachProject.getId());
+					}
+				}
+			}
+			projects = projectsMap.entrySet();
+			model.addAttribute("projects", projects);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("allocation", allocation);
 		map.put("names", names);
+		map.put("empID", allocation.getEmployee().getId());
 
 		return new ModelAndView("editAllocation", "map", map);
 	}

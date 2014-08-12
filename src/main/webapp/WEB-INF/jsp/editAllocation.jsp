@@ -24,24 +24,14 @@
 					<tr>
 						<td>
 							<div class="centerContent">
-								<strong>Employee Name :</strong>
-								<form:input path="employee_name"
-									value="${map.allocation.employee_name}" required="required" readonly="true"/>
+								<form:hidden path="employee.id" value="${map.empID}"/>
+								<c:out value="${map.allocation.employee_name}"/>
+
 								<br /> <strong>Project Name :</strong>
-								<spring:bind path="project">
-									<select name="project">
-										<c:forEach items='${map.names}' var='name'>
-											<c:choose>
-												<c:when test="${name eq map.allocation.project}">
-													<option value="${name}" selected>${name}</option>
-												</c:when>
-												<c:otherwise>
-													<option value="${name}">${name}</option>
-												</c:otherwise>
-											</c:choose>
-										</c:forEach>
-									</select>
-								</spring:bind>
+								<form:select path="project.id" required="required">
+										<form:options items="${projects}" var="project" itemValue="value" itemLabel="key"/>
+								</form:select>
+								
 								<%-- <form:input path="project_id"
 									value="${map.allocation.project_id}" required="required" /> --%>
 								<br /> <strong>Percent :</strong>
