@@ -49,7 +49,7 @@ public class AllocationServiceImpl implements AllocationService{
 	
 	@Transactional
 	public List<Allocation> filterAllocation(String project_name){
-		return null;
+		return allocationRepository.filterAllocation(project_name);
 	}
 	
 	@Transactional

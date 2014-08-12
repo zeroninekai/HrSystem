@@ -220,6 +220,14 @@ public class AllocationController {
 			@ModelAttribute Project project) {
 		List<Allocation> allocationList = allocationService
 				.filterAllocation(project_name);
+		if(allocationList != null){
+			for (Allocation a : allocationList) {
+				a.setEmployee_name(a.getEmployee().getFname() + " "
+						+ a.getEmployee().getLname());
+				a.setProject_name(a.getProject().getProject_name());
+			}
+		}
+		
 		List<Project> allocationListView = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
 		List<String> names = new ArrayList<String>();
