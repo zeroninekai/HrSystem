@@ -42,11 +42,11 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Transactional
 	public List<Project> searchProject(String searchquery){
-		return null;
+		return projectRepository.searchProject(searchquery);
 	}
 	
 	@Transactional
 	public List<Project> filterProject(String project_name){
-		return null;
+		return projectRepository.filterProject(project_name);
 	}
 }
