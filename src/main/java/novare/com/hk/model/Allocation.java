@@ -1,5 +1,6 @@
 package novare.com.hk.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -37,6 +38,64 @@ public class Allocation {
 
 	@Transient
 	private String searchquery;
+	
+	@Transient
+	@Temporal(TemporalType.DATE)
+	private Date reportStartDate;
+	
+	@Transient
+	@Temporal(TemporalType.DATE)
+	private Date reportEndDate;
+	
+	
+	@Transient
+	private double totalAlloc;
+	
+	public double getTotalAlloc() {
+		return totalAlloc;
+	}
+
+	public void setTotalAlloc(double totalAlloc) {
+		this.totalAlloc = totalAlloc;
+	}
+
+	public long getPlannedHeadCount() {
+		return plannedHeadCount;
+	}
+
+	public void setPlannedHeadCount(int plannedHeadCount) {
+		this.plannedHeadCount = plannedHeadCount;
+	}
+
+	public double getDailyCostMonth() {
+		return dailyCostMonth;
+	}
+
+	public void setDailyCostMonth(double dailyCostMonth) {
+		this.dailyCostMonth = dailyCostMonth;
+	}
+
+	@Transient
+	private long plannedHeadCount;
+	
+	@Transient
+	private double dailyCostMonth;
+
+	public Date getReportStartDate() {
+		return reportStartDate;
+	}
+
+	public void setReportStartDate(Date reportStartDate) {
+		this.reportStartDate = reportStartDate;
+	}
+
+	public Date getReportEndDate() {
+		return reportEndDate;
+	}
+
+	public void setReportEndDate(Date reportEndDate) {
+		this.reportEndDate = reportEndDate;
+	}
 
 	public Employee getEmployee() {
 		return employee;

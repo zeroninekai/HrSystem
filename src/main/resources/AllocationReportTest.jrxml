@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AllocationReportTest" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="month" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+ proj.project_name,
+ COUNT(*) AS `Planned Headcount`,
+ SUM(percent) / 100 AS `Total Allocation`,
+ SUM(emp.cost*(alloc.percent/100)) AS `Daily Cost for the month` FROM Employees emp
+	INNER JOIN Allocation alloc on emp.id = alloc.employee_id
+	INNER JOIN Projects proj on proj.id = alloc.project_id
+	WHERE month(alloc.start_date) = $P{month}
+GROUP BY project_id;]]>
+	</queryString>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Planned Headcount" class="java.lang.Long"/>
+	<field name="Total Allocation" class="java.math.BigDecimal"/>
+	<field name="Daily Cost for the month" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="2" width="100" height="20" />
+				<text><![CDATA[project_name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="2" width="100" height="20" />
+				<text><![CDATA[Planned Headcount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="2" width="100" height="20"/>
+				<text><![CDATA[Total Allocation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="2" width="100" height="20" />
+				<text><![CDATA[Daily Cost for the month]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="25" y="40" width="100" height="20" />
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="154" y="41" width="100" height="20" />
+				<textFieldExpression><![CDATA[$F{Planned Headcount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="45" width="100" height="20" />
+				<textFieldExpression><![CDATA[$F{Total Allocation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="51" width="100" height="20" />
+				<textFieldExpression><![CDATA[$F{Daily Cost for the month}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

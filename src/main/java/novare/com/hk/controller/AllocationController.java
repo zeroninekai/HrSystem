@@ -1,6 +1,7 @@
 package novare.com.hk.controller;
 
 //import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -90,7 +91,7 @@ public class AllocationController {
 	}
 
 	@RequestMapping("/viewAllocationList")
-	public ModelAndView getAllocationList(@ModelAttribute Project project) {
+	public ModelAndView getAllocationList(@ModelAttribute Project project, @ModelAttribute Allocation allocation) {
 
 		/***
 		 * setting up employee name and project name for the table JSP View of
@@ -255,7 +256,7 @@ public class AllocationController {
 
 	@RequestMapping("/searchAlloc")
 	public ModelAndView searchAllocationList(@RequestParam String searchquery,
-			@ModelAttribute Project project) {
+			@ModelAttribute Project project,@ModelAttribute Allocation allocation) {
 		List<Allocation> allocationList = allocationService
 				.searchAllocation(searchquery);
 		
@@ -293,17 +294,41 @@ public class AllocationController {
 	}
 
 	@RequestMapping(value = "/reportPDFAlloc", method = RequestMethod.GET)
-	public ModelAndView jasperDownloadPdf(ModelAndView mv) {
-		System.out
-				.println("------------------Downloading PDF------------------");
+	public ModelAndView jasperDownloadPdf(@RequestParam Date reportStartDate, ModelAndView mv) {
+		System.out.println("------------------Downloading PDF------------------");
 
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Allocation> allocationList = allocationService.getViewAlloc();
+		List<Allocation> allocationList = allocationService.getReport(reportStartDate);
+		
+		
 
+/*		long headCount = 0;
+		double sumOfPercent = 0;
+*/
+		
+		for(Allocation a : allocationList){
+			System.out.println(a.getEmployee().getFname()); 
+			System.out.println(a.getProject().getProject_name()); 
+			/**			
+			 *  testing
+			 **/
+/*			parameterMap.put("reportStartDate", a.getStart_date());
+			parameterMap.put("project_name",a.getProject().getProject_name());
+			
+			headCount++;
+			sumOfPercent += a.getPercent();
+
+					
+			parameterMap.put("plannedHeadCount",headCount);*/
+		}
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(
 				allocationList, false);
 
+	/*	double totalAlloc = sumOfPercent / 100;*/
+		
+	/*	parameterMap.put("totalAlloc",totalAlloc);*/
 		parameterMap.put("dataSource", jrDataSource);
+	
 
 		mv = new ModelAndView("pdfReportAlloc", parameterMap);
 

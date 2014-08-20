@@ -3,7 +3,7 @@
 /* HTML CSS */
 body
 {
-    background-image: url(../images/background.png);
+    /* background-image: url(../images/background.png); */
     background-attachment: scroll;
     background-repeat: repeat;
     /*background-color:#3cc6ff;*/
@@ -263,7 +263,7 @@ option
 {
 /* 	background-position: top;
 	padding-top: 50px; */
-	text-align: center;
+	text-align: left;
 }
 
 .floatNavProj

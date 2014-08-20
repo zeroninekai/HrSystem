@@ -1,5 +1,6 @@
 package novare.com.hk.services;
 
+import java.util.Date;
 import java.util.List;
 
 import novare.com.hk.model.Allocation;
@@ -54,5 +55,11 @@ public class AllocationServiceImpl implements AllocationService{
 	@Transactional
 	public List<Allocation> searchAllocation(String searchquery){
 		return allocationRepository.searchAllocation(searchquery);
+	}
+
+	@Transactional
+	public List<Allocation> getReport(Date dateParam) {
+		// TODO Auto-generated method stub
+		return allocationRepository.generateReport(dateParam);
 	}
 }

@@ -23,7 +23,7 @@
 				/* var maxRow = $("#rowNum select").val("option:selected"); */
 				$('#empPage').jPaginate(
 				{
- 					'max': 4,//maxRow,
+ 					'max': 8,//maxRow,
 					'page': 1,
 					'links':'selectButtons'
 				});

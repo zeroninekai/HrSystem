@@ -1,5 +1,6 @@
 package novare.com.hk.services;
 
+import java.util.Date;
 import java.util.List;
 
 import novare.com.hk.model.Allocation;
@@ -21,4 +22,6 @@ public interface AllocationService {
 	public List<Allocation> filterAllocation(String project_name);
 	
 	public List<Allocation> searchAllocation(String searchquery);
+	
+	public List<Allocation> getReport(Date dateParam);
 }

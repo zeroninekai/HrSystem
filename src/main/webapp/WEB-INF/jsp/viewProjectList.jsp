@@ -22,7 +22,7 @@
 			{
 				$('#projPage').jPaginate(
 				{
-					'max': 4,
+					'max': 8,
 					'page': 1,
 					'links':'selectButtons'
 				});

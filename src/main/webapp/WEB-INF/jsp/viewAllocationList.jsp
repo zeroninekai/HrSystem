@@ -23,7 +23,7 @@
 			{
 				$('#allocPage').jPaginate(
 				{
-					'max': 4,
+					'max': 8,
 					'page': 1,
 					'links':'selectButtons'
 				});
@@ -66,7 +66,13 @@
 				<input type="submit" value="Reset" />
 			</form:form>
 		</div>
-		<a href="reportPDFAlloc">Download Report</a>
+		
+		<form:form method="get" action="reportPDFAlloc" modelAttribute="allocation">
+			<form:input path="reportStartDate" type="date" required="required" placeholder="09-09-2014"/>
+			<form:input path="reportEndDate" type="date" placeholder="10-29-2015"/>
+			<input type="submit" value="Generate Report" /><br />
+		</form:form>
+		
 		<br />
 		<br />
 		<table class="sortable" id="allocPage">
