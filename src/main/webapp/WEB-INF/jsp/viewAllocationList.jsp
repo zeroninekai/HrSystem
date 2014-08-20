@@ -68,8 +68,8 @@
 		</div>
 		
 		<form:form method="get" action="reportPDFAlloc" modelAttribute="allocation">
-			<form:input path="reportStartDate" type="date" required="required" placeholder="09-09-2014"/>
-			<form:input path="reportEndDate" type="date" placeholder="10-29-2015"/>
+			<form:input path="reportStartDate" type="date" required="required" placeholder="2014-08-01"/>
+			<form:input path="reportEndDate" type="date" placeholder="2014-12-15"/>
 			<input type="submit" value="Generate Report" /><br />
 		</form:form>
 		
