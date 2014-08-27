@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -13,8 +14,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-//import java.text.SimpleDateFormat;
-
 @Entity
 @Table(name = "projects")
 public class Project {
@@ -22,24 +21,26 @@ public class Project {
 	@Id
 	@GeneratedValue
 	private int id;
-	
-	public List<Allocation> getAllocations() {
-		return allocations;
-	}
 
-	public void setAllocations(List<Allocation> allocations) {
-		this.allocations = allocations;
-	}
+	@Transient
+	private long plannedHeadCount;
 
-	@OneToMany(mappedBy = "project")
+	@Transient
+	private double totalAllocation;
+
+	@Transient
+	private double dailyCost;
+
+	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
 	private List<Allocation> allocations;
-	 
+
 	private String client;
+
 	private String project_name;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date start_date;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = true)
 	private Date end_date;
@@ -47,17 +48,28 @@ public class Project {
 	@Transient
 	private String searchquery;
 
+	public List<Allocation> getAllocations() {
+		return allocations;
+	}
+
 	public String getClient() {
 		return client;
+	}
+
+	public double getDailyCost() {
+		return dailyCost;
 	}
 
 	public Date getEnd_date() {
 		return end_date;
 
 	}
-
 	public int getId() {
 		return id;
+	}
+
+	public long getPlannedHeadCount() {
+		return plannedHeadCount;
 	}
 
 	public String getProject_name() {
@@ -72,8 +84,20 @@ public class Project {
 		return start_date;
 	}
 
+	public double getTotalAllocation() {
+		return totalAllocation;
+	}
+
+	public void setAllocations(List<Allocation> allocations) {
+		this.allocations = allocations;
+	}
+
 	public void setClient(String client) {
 		this.client = client;
+	}
+
+	public void setDailyCost(double dailyCost) {
+		this.dailyCost = dailyCost;
 	}
 
 	public void setEnd_date(Date end_date) {
@@ -82,6 +106,10 @@ public class Project {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public void setPlannedHeadCount(long plannedHeadCount) {
+		this.plannedHeadCount = plannedHeadCount;
 	}
 
 	public void setProject_name(String project_name) {
@@ -94,5 +122,9 @@ public class Project {
 
 	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
+	}
+
+	public void setTotalAllocation(double totalAllocation) {
+		this.totalAllocation = totalAllocation;
 	}
 }

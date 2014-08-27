@@ -1,7 +1,5 @@
 package novare.com.hk.controller;
 
-//import java.util.ArrayList;
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -294,21 +292,54 @@ public class AllocationController {
 	}
 
 	@RequestMapping(value = "/reportPDFAlloc", method = RequestMethod.GET)
-	public ModelAndView jasperDownloadPdf(@RequestParam Date reportStartDate, ModelAndView mv) {
+	public ModelAndView jasperDownloadPdf(@RequestParam Date reportStartDate, @RequestParam Date reportEndDate, ModelAndView mv) {
 		System.out.println("------------------Downloading PDF------------------");
 
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Allocation> allocationList = allocationService.getReport(reportStartDate);
-		
+		List<Allocation> allocationList = allocationService.getReport(reportStartDate, reportEndDate);
+		List<Project> projectList = projectService.getProjectList();
 		
 
 /*		long headCount = 0;
 		double sumOfPercent = 0;
 */
 		
+/*		for(Project p : projectList){
+			for(Allocation a : allocationService.getAllocationList()){
+				if(p.getProject_name() == a.getProject().getProject_name()){
+					p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
+					double percentage = (double)a.getPercent()/100;
+					p.setTotalAllocation(p.getTotalAllocation()+percentage);
+					p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
+				}
+			}
+		}*/
+		
+		
+		for(Project p : projectService.getProjectList()){
+			List<Allocation> allocations = p.getAllocations();
+		}
+
+		
 		for(Allocation a : allocationList){
-			System.out.println(a.getEmployee().getFname()); 
+			System.out.println(a.getEmployee().getFname());
 			System.out.println(a.getProject().getProject_name()); 
+			
+		/*	for(Project p : projectService.getProjectList()){
+				if(p.getProject_name() == a.getProject().getProject_name()){*/
+					a.getProject().setPlannedHeadCount(a.getProject().getPlannedHeadCount()+1);
+					double percentage = (double)a.getPercent()/100;
+					a.getProject().setTotalAllocation(a.getProject().getTotalAllocation()+percentage);
+					a.getProject().setDailyCost(a.getProject().getDailyCost()+a.getEmployee().getCost()*percentage);
+		/*		}
+			}*/
+			System.out.println(a.getProject().getPlannedHeadCount());
+			System.out.println(a.getProject().getTotalAllocation());
+			System.out.println(a.getProject().getDailyCost());
+	
+			}
+			
+			
 			/**			
 			 *  testing
 			 **/
@@ -320,7 +351,7 @@ public class AllocationController {
 
 					
 			parameterMap.put("plannedHeadCount",headCount);*/
-		}
+		
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(
 				allocationList, false);
 

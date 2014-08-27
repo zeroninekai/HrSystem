@@ -3,8 +3,10 @@ package novare.com.hk.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -20,17 +22,9 @@ public class Employee {
 	@Id
 	@GeneratedValue
 	private int id;
-	
-	@OneToMany(mappedBy = "employee")
+
+	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Allocation> allocations;
-
-	public List<Allocation> getAllocations() {
-		return allocations;
-	}
-
-	public void setAllocations(List<Allocation> allocations) {
-		this.allocations = allocations;
-	}
 
 	@Column(name = "first_name")
 	private String fname;
@@ -39,23 +33,29 @@ public class Employee {
 	private String lname;
 
 	private String department;
+
 	private String status;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date start_date;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = true)
 	private Date date_resigned;
-	
+
 	private String position;
+
 	private double cost;
-	
+
 	@Transient
 	private String searchquery;
-	
+
 	@Transient
 	private String filterStat;
+
+	public List<Allocation> getAllocations() {
+		return allocations;
+	}
 
 	public double getCost() {
 		return cost;
@@ -99,6 +99,10 @@ public class Employee {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public void setAllocations(List<Allocation> allocations) {
+		this.allocations = allocations;
 	}
 
 	public void setCost(double cost) {

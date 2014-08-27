@@ -8,8 +8,8 @@
 	<field name="lname" class="java.lang.String"/>
 	<field name="department" class="java.lang.String"/>
 	<field name="status" class="java.lang.String"/>
-	<field name="start_date" class="java.lang.String"/>
-	<field name="date_resigned" class="java.lang.String"/>
+	<field name="start_date" class="java.util.Date"/>
+	<field name="date_resigned" class="java.util.Date"/>
 	<field name="position" class="java.lang.String"/>
 	<field name="cost" class="java.lang.Double"/>
 	<background>

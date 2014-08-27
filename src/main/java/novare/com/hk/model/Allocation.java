@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,11 +21,11 @@ public class Allocation {
 	@GeneratedValue
 	private int id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "employee_id")
 	private Employee employee;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_id")
 	private Project project;
 
@@ -38,63 +39,29 @@ public class Allocation {
 
 	@Transient
 	private String searchquery;
-	
+
 	@Transient
 	@Temporal(TemporalType.DATE)
 	private Date reportStartDate;
-	
+
 	@Transient
 	@Temporal(TemporalType.DATE)
 	private Date reportEndDate;
-	
-	
+
 	@Transient
 	private double totalAlloc;
-	
-	public double getTotalAlloc() {
-		return totalAlloc;
-	}
 
-	public void setTotalAlloc(double totalAlloc) {
-		this.totalAlloc = totalAlloc;
-	}
-
-	public long getPlannedHeadCount() {
-		return plannedHeadCount;
-	}
-
-	public void setPlannedHeadCount(int plannedHeadCount) {
-		this.plannedHeadCount = plannedHeadCount;
-	}
-
-	public double getDailyCostMonth() {
-		return dailyCostMonth;
-	}
-
-	public void setDailyCostMonth(double dailyCostMonth) {
-		this.dailyCostMonth = dailyCostMonth;
-	}
-
-	@Transient
-	private long plannedHeadCount;
-	
 	@Transient
 	private double dailyCostMonth;
 
-	public Date getReportStartDate() {
-		return reportStartDate;
-	}
+	@Transient
+	private String employee_name;
 
-	public void setReportStartDate(Date reportStartDate) {
-		this.reportStartDate = reportStartDate;
-	}
+	@Transient
+	private String project_name;
 
-	public Date getReportEndDate() {
-		return reportEndDate;
-	}
-
-	public void setReportEndDate(Date reportEndDate) {
-		this.reportEndDate = reportEndDate;
+	public double getDailyCostMonth() {
+		return dailyCostMonth;
 	}
 
 	public Employee getEmployee() {
@@ -105,27 +72,9 @@ public class Allocation {
 		return employee_name;
 	}
 
-	public void setEmployee_name(String employee_name) {
-		this.employee_name = employee_name;
-	}
-
-	public String getProject_name() {
-		return project_name;
-	}
-
-	public void setProject_name(String project_name) {
-		this.project_name = project_name;
-	}
-
 	public Date getEnd_date() {
 		return end_date;
 	}
-
-	@Transient
-	private String employee_name;
-
-	@Transient
-	private String project_name;
 
 	public int getId() {
 		return id;
@@ -139,6 +88,18 @@ public class Allocation {
 		return project;
 	}
 
+	public String getProject_name() {
+		return project_name;
+	}
+
+	public Date getReportEndDate() {
+		return reportEndDate;
+	}
+
+	public Date getReportStartDate() {
+		return reportStartDate;
+	}
+
 	public String getSearchquery() {
 		return searchquery;
 	}
@@ -147,8 +108,20 @@ public class Allocation {
 		return start_date;
 	}
 
+	public double getTotalAlloc() {
+		return totalAlloc;
+	}
+
+	public void setDailyCostMonth(double dailyCostMonth) {
+		this.dailyCostMonth = dailyCostMonth;
+	}
+
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+
+	public void setEmployee_name(String employee_name) {
+		this.employee_name = employee_name;
 	}
 
 	public void setEnd_date(Date end_date) {
@@ -167,11 +140,27 @@ public class Allocation {
 		this.project = project;
 	}
 
+	public void setProject_name(String project_name) {
+		this.project_name = project_name;
+	}
+
+	public void setReportEndDate(Date reportEndDate) {
+		this.reportEndDate = reportEndDate;
+	}
+
+	public void setReportStartDate(Date reportStartDate) {
+		this.reportStartDate = reportStartDate;
+	}
+
 	public void setSearchquery(String searchquery) {
 		this.searchquery = searchquery;
 	}
 
 	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
+	}
+
+	public void setTotalAlloc(double totalAlloc) {
+		this.totalAlloc = totalAlloc;
 	}
 }

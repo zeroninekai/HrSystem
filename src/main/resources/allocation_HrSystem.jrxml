@@ -9,6 +9,9 @@
 	<field name="percent" class="java.lang.Integer"/>
 	<field name="start_date" class="java.util.Date"/>
 	<field name="end_date" class="java.util.Date"/>
+	<field name="project.plannedHeadCount" class="java.lang.Long"/>
+	<field name="project.totalAllocation" class="java.lang.Double"/>
+	<field name="project.dailyCost" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -45,7 +48,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<textField evaluationTime="Report">
 				<reportElement x="762" y="9" width="40" height="20"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
@@ -58,65 +61,9 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="21" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="133" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
-				<box>
-					<pen lineColor="#000000"/>
-					<topPen lineColor="#000000"/>
-					<leftPen lineColor="#000000"/>
-					<bottomPen lineWidth="3.0" lineColor="#000000"/>
-					<rightPen lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ID]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="133" y="0" width="133" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
-				<box>
-					<pen lineColor="#000000"/>
-					<topPen lineColor="#000000"/>
-					<leftPen lineColor="#000000"/>
-					<bottomPen lineWidth="3.0" lineColor="#000000"/>
-					<rightPen lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Employee]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="266" y="0" width="133" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
-				<box>
-					<pen lineColor="#000000"/>
-					<topPen lineColor="#000000"/>
-					<leftPen lineColor="#000000"/>
-					<bottomPen lineWidth="3.0" lineColor="#000000"/>
-					<rightPen lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Project Name]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="399" y="0" width="133" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
-				<box>
-					<pen lineColor="#000000"/>
-					<topPen lineColor="#000000"/>
-					<leftPen lineColor="#000000"/>
-					<bottomPen lineWidth="3.0" lineColor="#000000"/>
-					<rightPen lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Allocation Percentage]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="532" y="0" width="133" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
+				<reportElement mode="Opaque" x="341" y="0" width="101" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
 				<box>
 					<pen lineColor="#000000"/>
 					<topPen lineColor="#000000"/>
@@ -130,7 +77,7 @@
 				<text><![CDATA[Start Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="665" y="0" width="133" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
+				<reportElement mode="Opaque" x="442" y="0" width="73" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
 				<box>
 					<pen lineColor="#000000"/>
 					<topPen lineColor="#000000"/>
@@ -143,51 +90,151 @@
 				</textElement>
 				<text><![CDATA[End Date]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="682" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineWidth="3.0" lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Daily Cost]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="682" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineWidth="3.0" lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Daily Cost]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="515" y="0" width="67" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineWidth="3.0" lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Headcount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="582" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineWidth="3.0" lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Allocation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="114" y="0" width="118" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineWidth="3.0" lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Project Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="232" y="0" width="109" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineWidth="3.0" lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Allocation Percentage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="114" height="20" forecolor="#FFFFFF" backcolor="#FF9900"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineWidth="3.0" lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Name]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="0" y="0" width="133" height="20" backcolor="#CCCCFF"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="133" y="0" width="133" height="20" backcolor="#CCCCFF"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{employee.fname}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="266" y="0" width="133" height="20" backcolor="#CCCCFF"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{project.project_name}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="399" y="0" width="133" height="20" backcolor="#CCCCFF"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{percent}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="532" y="0" width="133" height="20" backcolor="#CCCCFF"/>
+				<reportElement mode="Opaque" x="341" y="1" width="101" height="24" backcolor="#CCCCFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{start_date}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="665" y="0" width="133" height="20" backcolor="#CCCCFF"/>
+				<reportElement mode="Opaque" x="442" y="1" width="73" height="24" backcolor="#CCCCFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{end_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="582" y="0" width="100" height="27" backcolor="#CCCCFF"/>
+				<textFieldExpression><![CDATA[$F{project.totalAllocation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="515" y="0" width="67" height="25" backcolor="#CCCCFF"/>
+				<textFieldExpression><![CDATA[$F{project.plannedHeadCount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="114" y="1" width="118" height="24" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project.project_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="232" y="1" width="109" height="24" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{percent}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="114" height="25" backcolor="#CCCCFF"/>
+				<textFieldExpression><![CDATA[$F{employee.fname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="682" y="1" width="100" height="26" backcolor="#CCCCFF"/>
+				<textFieldExpression><![CDATA[$F{project.dailyCost}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

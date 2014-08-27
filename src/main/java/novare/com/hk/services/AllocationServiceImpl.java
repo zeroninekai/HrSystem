@@ -58,8 +58,8 @@ public class AllocationServiceImpl implements AllocationService{
 	}
 
 	@Transactional
-	public List<Allocation> getReport(Date dateParam) {
+	public List<Allocation> getReport(Date dateParam, Date endDateParam) {
 		// TODO Auto-generated method stub
-		return allocationRepository.generateReport(dateParam);
+		return allocationRepository.generateReport(dateParam, endDateParam);
 	}
 }
