@@ -13,7 +13,9 @@ public interface AllocationRepository extends JpaRepository<Allocation, Integer>
 	@Query("SELECT a FROM Allocation a WHERE project.project_name = ?1")
 	public List<Allocation> filterAllocation(String filterStat);
 	
-	@Query("SELECT a FROM Allocation a WHERE project.project_name LIKE ?1 OR employee.fname = ?1 OR employee.lname = ?1")
+	@Query("SELECT a FROM Allocation a WHERE LOWER(project.project_name) LIKE ?1"
+			+ " OR LOWER(employee.fname) LIKE ?1"
+			+ " OR LOWER(employee.lname) LIKE ?1")
 	public List<Allocation> searchAllocation(String search_param);
 	
 	@Query("SELECT a FROM Allocation a"
