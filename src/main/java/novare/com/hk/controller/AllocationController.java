@@ -3,6 +3,7 @@ package novare.com.hk.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,8 +56,6 @@ public class AllocationController {
 		final Map<String, Integer> employeesMap = new HashMap<String, Integer>();
 		if (employeesList != null && !employeesList.isEmpty()) {
 			for (Employee eachEmployee : employeesList) {
-				System.out.println("eto EMP: " + eachEmployee.getFname() + " "
-						+ eachEmployee.getLname() + "\n");
 				if (eachEmployee != null) {
 					employeesMap.put(eachEmployee.getFname() + " "
 							+ eachEmployee.getLname(), eachEmployee.getId());
@@ -74,8 +73,6 @@ public class AllocationController {
 		if (projectsList != null && !projectsList.isEmpty()) {
 			for (Project eachProject : projectsList) {
 				if (eachProject != null) {
-					System.out.println("eto proj: "
-							+ eachProject.getProject_name() + "\n");
 					projectsMap.put(eachProject.getProject_name(),
 							eachProject.getId());
 				}
@@ -157,10 +154,7 @@ public class AllocationController {
 			if (projectsList != null && !projectsList.isEmpty()) {
 				for (Project eachProject : projectsList) {
 					if (eachProject != null) {
-						System.out.println("eto proj: "
-								+ eachProject.getProject_name() + "\n");
-						projectsMap.put(eachProject.getProject_name(),
-								eachProject.getId());
+						projectsMap.put(eachProject.getProject_name(),eachProject.getId());
 					}
 				}
 			}
@@ -216,9 +210,8 @@ public class AllocationController {
 
 	@RequestMapping("/filterAlloc")
 	public ModelAndView filterAllocationList(@RequestParam String project_name,
-			@ModelAttribute Project project) {
-		List<Allocation> allocationList = allocationService
-				.filterAllocation(project_name);
+			@ModelAttribute Project project, @ModelAttribute Allocation allocation) {
+		List<Allocation> allocationList = allocationService.filterAllocation(project_name);
 		if(allocationList != null){
 			for (Allocation a : allocationList) {
 				a.setEmployee_name(a.getEmployee().getFname() + " "
@@ -296,73 +289,58 @@ public class AllocationController {
 		System.out.println("------------------Downloading PDF------------------");
 
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Allocation> allocationList = allocationService.getReport(reportStartDate, reportEndDate);
-		List<Project> projectList = projectService.getProjectList();
-		
-
-/*		long headCount = 0;
-		double sumOfPercent = 0;
-*/
-		
-/*		for(Project p : projectList){
-			for(Allocation a : allocationService.getAllocationList()){
+/*		List<Allocation> allocationList = allocationService.getReport(reportStartDate, reportEndDate);*/
+		List<Project> projectList = projectService.getReport(reportStartDate, reportEndDate);
+			
+		for(Project p : projectList){
+			for(Allocation a : allocationService.getReport(reportStartDate, reportEndDate)){
 				if(p.getProject_name() == a.getProject().getProject_name()){
-					p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
-					double percentage = (double)a.getPercent()/100;
+				    p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
+				    double percentage = (double)a.getPercent()/100;
 					p.setTotalAllocation(p.getTotalAllocation()+percentage);
 					p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
 				}
 			}
-		}*/
-		
-		
-		for(Project p : projectService.getProjectList()){
-			List<Allocation> allocations = p.getAllocations();
 		}
-
 		
-		for(Allocation a : allocationList){
+/*		for(Allocation a : allocationList){
 			System.out.println(a.getEmployee().getFname());
 			System.out.println(a.getProject().getProject_name()); 
 			
-		/*	for(Project p : projectService.getProjectList()){
-				if(p.getProject_name() == a.getProject().getProject_name()){*/
+			for(Project p : projectService.getProjectList()){
+				if(p.getProject_name() == a.getProject().getProject_name()){
 					a.getProject().setPlannedHeadCount(a.getProject().getPlannedHeadCount()+1);
 					double percentage = (double)a.getPercent()/100;
 					a.getProject().setTotalAllocation(a.getProject().getTotalAllocation()+percentage);
 					a.getProject().setDailyCost(a.getProject().getDailyCost()+a.getEmployee().getCost()*percentage);
-		/*		}
-			}*/
+				}
+			}
 			System.out.println(a.getProject().getPlannedHeadCount());
 			System.out.println(a.getProject().getTotalAllocation());
 			System.out.println(a.getProject().getDailyCost());
 	
-			}
+			}*/
 			
 			
 			/**			
 			 *  testing
 			 **/
-/*			parameterMap.put("reportStartDate", a.getStart_date());
+		/*	
+			long headCount = 0;
+			double sumOfPercent = 0;
+		 	parameterMap.put("reportStartDate", a.getStart_date());
 			parameterMap.put("project_name",a.getProject().getProject_name());
-			
 			headCount++;
 			sumOfPercent += a.getPercent();
+			parameterMap.put("plannedHeadCount",headCount);
+			double totalAlloc = sumOfPercent / 100;
+			parameterMap.put("totalAlloc",totalAlloc);
+		*/
 
-					
-			parameterMap.put("plannedHeadCount",headCount);*/
-		
-		JRDataSource jrDataSource = new JRBeanCollectionDataSource(
-				allocationList, false);
-
-	/*	double totalAlloc = sumOfPercent / 100;*/
-		
-	/*	parameterMap.put("totalAlloc",totalAlloc);*/
+		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList, false);
 		parameterMap.put("dataSource", jrDataSource);
-	
 
 		mv = new ModelAndView("pdfReportAlloc", parameterMap);
-
 		return mv;
 	}
 
