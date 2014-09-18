@@ -29,6 +29,7 @@
 
 								<br /> <strong>Project Name :</strong>
 								<form:select path="project.id" required="required">
+										<option value="">--Select project--</option>
 										<form:options items="${projects}" var="project" itemValue="value" itemLabel="key"/>
 								</form:select>
 								
