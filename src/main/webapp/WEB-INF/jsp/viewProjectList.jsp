@@ -39,7 +39,6 @@
 <body>
 	<%@include file="navlinks.jsp"%>
 	<div align="center">
-		<!-- center -->
 		<h1>Project List</h1>
 		<div class="floaterButProj">
 			<a href="addProject"><img alt="Add New Project" width="150"
@@ -71,7 +70,6 @@
 		<table class="sortable" id="projPage">
 			<thead>
 				<tr>
-					<!-- <th>Project Id</th> -->
 					<th>Client</th>
 					<th>Project Name</th>
 					<th>Start Date</th>
@@ -83,7 +81,6 @@
 			<tbody>
 				<c:forEach var="project" items="${map.projectList}">
 					<tr>
-						<%-- <td>${project.id}</td> --%>
 						<td>${project.client}</td>
 						<td>${project.project_name}</td>
 						<td>${project.start_date}</td>
@@ -100,11 +97,8 @@
 				</c:forEach>
 			</tbody>
 			<tfoot>
-				<!-- <tr><th class="sorttable_nosort" colspan="11"><div class="center">Pages: </div></th></tr> -->
 			</tfoot>
 		</table>
-
-		<!-- center -->
 	</div>
 	<%@include file="footer.jsp"%>
 </body>

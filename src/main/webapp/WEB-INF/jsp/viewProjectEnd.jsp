@@ -16,7 +16,6 @@
 <body>
 	<%@include file="navlinks.jsp"%>
 	<div align="center">
-		<!-- center -->
 		<h1>Project End List</h1>
 		<div class="floaterButQuery">
 			<a href="viewAllocationList"><img alt="View Allocation Table"
@@ -42,8 +41,6 @@
 				<td colspan="11"><div class="center">Pages:</div></td>
 			</tr>
 		</table>
-
-		<!-- center -->
 	</div>
 	<%@include file="footer.jsp"%>
 </body>

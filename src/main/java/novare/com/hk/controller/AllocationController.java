@@ -3,7 +3,6 @@ package novare.com.hk.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -289,7 +288,6 @@ public class AllocationController {
 		System.out.println("------------------Downloading PDF------------------");
 
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-/*		List<Allocation> allocationList = allocationService.getReport(reportStartDate, reportEndDate);*/
 		List<Project> projectList = projectService.getReport(reportStartDate, reportEndDate);
 			
 		for(Project p : projectList){
@@ -302,40 +300,6 @@ public class AllocationController {
 				}
 			}
 		}
-		
-/*		for(Allocation a : allocationList){
-			System.out.println(a.getEmployee().getFname());
-			System.out.println(a.getProject().getProject_name()); 
-			
-			for(Project p : projectService.getProjectList()){
-				if(p.getProject_name() == a.getProject().getProject_name()){
-					a.getProject().setPlannedHeadCount(a.getProject().getPlannedHeadCount()+1);
-					double percentage = (double)a.getPercent()/100;
-					a.getProject().setTotalAllocation(a.getProject().getTotalAllocation()+percentage);
-					a.getProject().setDailyCost(a.getProject().getDailyCost()+a.getEmployee().getCost()*percentage);
-				}
-			}
-			System.out.println(a.getProject().getPlannedHeadCount());
-			System.out.println(a.getProject().getTotalAllocation());
-			System.out.println(a.getProject().getDailyCost());
-	
-			}*/
-			
-			
-			/**			
-			 *  testing
-			 **/
-		/*	
-			long headCount = 0;
-			double sumOfPercent = 0;
-		 	parameterMap.put("reportStartDate", a.getStart_date());
-			parameterMap.put("project_name",a.getProject().getProject_name());
-			headCount++;
-			sumOfPercent += a.getPercent();
-			parameterMap.put("plannedHeadCount",headCount);
-			double totalAlloc = sumOfPercent / 100;
-			parameterMap.put("totalAlloc",totalAlloc);
-		*/
 
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList, false);
 		parameterMap.put("dataSource", jrDataSource);

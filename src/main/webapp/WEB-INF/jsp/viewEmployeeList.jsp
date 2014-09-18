@@ -48,16 +48,7 @@
 				height="37.5" src="<c:url value="/resources/images/addnewEmp.png"/>"
 				class="addEmplink" /></a>
 		</div>
-		<!-- <select name="rowNum" id="rowNum">
-		<option value="5" selected>5</option>
-		<option value="10">10</option>
-		<option value="20">20</option>
-		<option value="30">30</option>
-		<option value="40">40</option>
-		<option value="50">50</option>
-		<option value="100">100</option>
-		<option value="1000">1000</option>
-		</select> -->
+
 		<br />
 		<div id="searchBox">
 			<form:form modelAttribute="employee" action="searchEmp" method="post">
@@ -77,15 +68,12 @@
 				<input type="submit" value="Reset" />
 			</form:form>
 		</div>
-		<%-- <form:form method="get" action="reportPDF"> --%>
-			<a href="reportPDFEmp">Download Report</a>
-			<%-- </form:form> --%>
+
 			<br />
 		<br />
 		<table class="sortable" id="empPage">
 			<thead>
 				<tr>
-					<!-- <th>Employee Id</th> -->
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Department</th>
@@ -99,12 +87,11 @@
 				</tr>
 			</thead>
 			<tfoot class="sorttable_nosort">
-				<!-- 			<tr><th class="sorttable_nosort" colspan="11"><div class="center">Pages: </div></th></tr> -->
 			</tfoot>
 			<tbody>
 				<c:forEach var="employee" items="${map.employeeList}">
 					<tr>
-						<%-- <td>${employee.id}</td> --%>
+						
 						<td>${employee.fname}</td>
 						<td>${employee.lname}</td>
 						<td>${employee.department}</td>
@@ -125,7 +112,6 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<!-- center -->
 	</div>
 	<%@include file="footer.jsp"%>
 </body>

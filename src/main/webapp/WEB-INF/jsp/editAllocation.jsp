@@ -33,8 +33,6 @@
 										<form:options items="${projects}" var="project" itemValue="value" itemLabel="key"/>
 								</form:select>
 								
-								<%-- <form:input path="project_id"
-									value="${map.allocation.project_id}" required="required" /> --%>
 								<br /> <strong>Percent :</strong>
 								<form:input path="percent" value="${map.allocation.percent}"
 									required="required" />
