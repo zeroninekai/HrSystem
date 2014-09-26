@@ -290,13 +290,26 @@ public class AllocationController {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		List<Project> projectList = projectService.getReport(reportStartDate, reportEndDate);
 			
+	
+		
 		for(Project p : projectList){
-			for(Allocation a : allocationService.getReport(reportStartDate, reportEndDate)){
-				if(p.getProject_name() == a.getProject().getProject_name()){
-				    p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
-				    double percentage = (double)a.getPercent()/100;
-					p.setTotalAllocation(p.getTotalAllocation()+percentage);
-					p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
+			List<Allocation> allocationList = p.getAllocations();
+			for(Allocation a : allocationList){
+				if(reportEndDate != null){
+					if((a.getStart_date().after(reportStartDate) || a.getStart_date().equals(reportStartDate)) && (a.getStart_date().before(reportEndDate) || a.getStart_date().equals(reportEndDate))){
+								p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
+							    double percentage = (double)a.getPercent()/100;
+								p.setTotalAllocation(p.getTotalAllocation()+percentage);
+								p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
+					}
+				}
+				else{
+					if((a.getStart_date().after(reportStartDate) || a.getStart_date().equals(reportStartDate))){
+						p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
+					    double percentage = (double)a.getPercent()/100;
+						p.setTotalAllocation(p.getTotalAllocation()+percentage);
+						p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
+			}
 				}
 			}
 		}

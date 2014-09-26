@@ -20,4 +20,9 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 			+ " JOIN p.allocations AS alloc"
 			+ "  WHERE alloc.start_date BETWEEN ?1 AND ?2")
 	public List<Project> generateReport(Date dateParam, Date endDateParam);
+	
+	@Query("SELECT DISTINCT p FROM Project p"
+			+ " JOIN p.allocations AS alloc"
+			+ "  WHERE alloc.start_date >= ?1")
+	public List<Project> generateReport(Date dateParam);
 }

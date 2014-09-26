@@ -52,6 +52,16 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	public List<Project> getReport(Date dateParam, Date endDateParam) {
-		return projectRepository.generateReport(dateParam, endDateParam);
+		// Both start date and end date is not empty
+		if(dateParam != null && endDateParam != null){
+			return projectRepository.generateReport(dateParam, endDateParam);
+		}
+		// When only start date has a value and end date is empty/null.
+		else if(dateParam != null && endDateParam == null){
+			return projectRepository.generateReport(dateParam);
+		}
+		else{
+			return projectRepository.findAll();
+		}
 	}
 }
