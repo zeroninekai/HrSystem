@@ -23,9 +23,9 @@
 			{
 				$('#allocPage').jPaginate(
 				{
-					'max': 8,
+					'max': 10,
 					'page': 1,
-					'links':'selectButtons'
+					'links': 'selectButtons'
 				});
 			});
 		</script>
@@ -38,24 +38,16 @@
 		</script>
 </head>
 <body>
+<div id="title">Allocation List</div>
 	<%@include file="navlinks.jsp"%>
-	<div align="center">
+	<div class="optionElements">
 		<!-- center -->
-		<h1>Allocation List</h1>
-		<div class="floaterButAlloc">
-			<a href="addAllocation"><img alt="Add New Allocation" width="150"
-				height="37.5"
-				src="<c:url value="/resources/images/addnewAlloc.png"/>"
-				class="addAlloclink" /></a>
-		</div>
-		<br />
 		<div id="searchBox">
 			<form:form modelAttribute="project" action="searchAlloc" method="post">
 				Search Table: <form:input type="text" path="searchquery" />&nbsp;<input
 					type="submit" value="Search" />
 			</form:form>
 		</div>
-		<div>
 			<form:form modelAttribute="project" method="post"
 				action="filterAlloc" id="filterSelect">
 				Filter: <form:select path="project_name" items="${map.names}"/>
@@ -64,16 +56,27 @@
 			<form:form modelAttribute="project" method="post"
 				action="viewAllocationList" id="filterSelect">
 				<input type="submit" value="Reset" />
-			</form:form>
-		</div>
-		
+			</form:form>&nbsp;
+			<span class="floaterButAlloc">
+			<a href="addAllocation"><img alt="Add New Allocation" width="150"
+				height="33"
+				src="<c:url value="/resources/images/addAlloc.png"/>"
+				class="addAlloclink" /></a>
+			</span>
+			<span class="floatReportBut">
+			<a href="reportPDFAlloc"><img alt="Generate Report" width="150"
+				height="33"
+				src="<c:url value="/resources/images/genReport.png"/>"
+				class="genReportlink" /></a>
+				</span>
+				<br/>
 		<form:form method="get" action="reportPDFAlloc" modelAttribute="allocation">
-			<form:input path="reportStartDate" type="date" required="required" placeholder="2014-08-01"/>
-			<form:input path="reportEndDate" type="date" placeholder="2014-12-15"/>
+				Search by date: &nbsp;
+				Start<form:input path="reportStartDate" type="date"  placeholder="2014-08-01"/>&nbsp;
+			End <form:input path="reportEndDate" type="date" placeholder="2014-12-15"/>
 			<input type="submit" value="Generate Report" /><br />
 		</form:form>
-		
-		<br />
+		</div>
 		<br />
 		<table class="sortable" id="allocPage">
 			<thead>
@@ -82,10 +85,10 @@
 					<th>Employee</th>
 					<th>Project Name</th>
 					<th>Percent</th>
-					<th>Start Date</th>
-					<th>End Date</th>
+					<th>Start Date<br/>(YYYY-MM-DD)</th>
+					<th>End Date<br/>(YYYY-MM-DD)</th>
 					<th class="sorttable_nosort">Controls</th>
-					<th class="sorttable_nosort"></th>
+					<!-- <th class="sorttable_nosort"></th> -->
 				</tr>
 			</thead>
 			<tbody>
@@ -94,16 +97,16 @@
 						<%-- <td>${allocation.id}</td> --%>
 						<td>${allocation.employee_name}</td>
 						<td>${allocation.project_name}</td>
-						<td>${allocation.percent}</td>
+						<td>${allocation.percent}%</td>
 						<td>${allocation.start_date}</td>
 						<td>${allocation.end_date}</td>
 						<td><a href="editAllocation?id=${allocation.id}"><img
-								alt="Edit" width="60" height="30"
-								src="<c:url value="/resources/images/editbut.png"/>"
-								class="editlink" /></a></td>
-						<td><a href="deleteAllocation?id=${allocation.id}" onclick="return confirmAction()"><img
-								alt="Delete" width="60" height="30"
-								src="<c:url value="/resources/images/delbut.png"/>"
+								alt="Edit" width="85" height="29"
+								src="<c:url value="/resources/images/editBut.png"/>"
+								class="editlink" /></a>
+						<a href="deleteAllocation?id=${allocation.id}" onclick="return confirmAction()"><img
+								alt="Delete" width="85" height="29"
+								src="<c:url value="/resources/images/delBut.png"/>"
 								class="dellink" /></a></td>
 					</tr>
 				</c:forEach>
@@ -114,7 +117,6 @@
 		</table>
 
 		<!-- center -->
-	</div>
 	<%@include file="footer.jsp"%>
 </body>
 </html>
