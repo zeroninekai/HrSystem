@@ -51,6 +51,7 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectRepository.filterProject(project_name);
 	}
 
+	@Transactional
 	public List<Project> getReport(Date dateParam, Date endDateParam) {
 		// Both start date and end date is not empty
 		if(dateParam != null && endDateParam != null){

@@ -43,6 +43,8 @@ public class AllocationController {
 	@Autowired
 	ProjectService projectService;
 
+	List<Project> projectList;
+	
 	@RequestMapping(value = "/addAllocation", method = RequestMethod.GET)
 	public String addAllocation(@ModelAttribute Allocation allocation,
 			Model model) {
@@ -92,6 +94,7 @@ public class AllocationController {
 		 * allocations
 		 ***/
 			List<Allocation> allocationList = allocationService.getAllocationList();
+			projectList = projectService.getProjectList();
 			if(allocationList != null){
 				for (Allocation a : allocationList) {
 					a.setEmployee_name(a.getEmployee().getFname() + " "
@@ -102,10 +105,10 @@ public class AllocationController {
 		/**********************************************************************/
 
 		/***** 	for project names under filter dropdown	 *****/
-			List<Project> projectList = projectService.getProjectList();
+			List<Project> projectListDbox = projectService.getProjectList();
 			List<String> proj_names = new ArrayList<String>();
 			List<String> names = new ArrayList<String>();
-			for (Project p : projectList) {
+			for (Project p : projectListDbox) {
 				proj_names.add(p.getProject_name());
 			}
 			Set<String> se = new HashSet<String>(proj_names);
@@ -211,6 +214,7 @@ public class AllocationController {
 	public ModelAndView filterAllocationList(@RequestParam String project_name,
 			@ModelAttribute Project project, @ModelAttribute Allocation allocation) {
 		List<Allocation> allocationList = allocationService.filterAllocation(project_name);
+		projectList = projectService.filterProject(project_name);
 		if(allocationList != null){
 			for (Allocation a : allocationList) {
 				a.setEmployee_name(a.getEmployee().getFname() + " "
@@ -288,31 +292,44 @@ public class AllocationController {
 		System.out.println("------------------Downloading PDF------------------");
 
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Project> projectList = projectService.getReport(reportStartDate, reportEndDate);
-			
+		
+		if(reportStartDate != null || reportEndDate != null){
+			projectList = projectService.getReport(reportStartDate, reportEndDate);
+			System.out.println("====\nreport \nservice \nproject \n====\n");
+		}	
 	
 		
 		for(Project p : projectList){
+			System.out.print(p.getProject_name() + ": ");
 			List<Allocation> allocationList = p.getAllocations();
 			for(Allocation a : allocationList){
 				if(reportEndDate != null){
 					if((a.getStart_date().after(reportStartDate) || a.getStart_date().equals(reportStartDate)) && (a.getStart_date().before(reportEndDate) || a.getStart_date().equals(reportEndDate))){
-								p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
-							    double percentage = (double)a.getPercent()/100;
-								p.setTotalAllocation(p.getTotalAllocation()+percentage);
-								p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
-					}
-				}
-				else{
+						p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
+					    double percentage = (double)a.getPercent()/100;
+						p.setTotalAllocation(p.getTotalAllocation()+percentage);
+						p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
+						System.out.println(a.getEmployee().getFname());
+					}// end inner if
+				} //end outer if
+				else if(reportStartDate != null){
 					if((a.getStart_date().after(reportStartDate) || a.getStart_date().equals(reportStartDate))){
 						p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
 					    double percentage = (double)a.getPercent()/100;
 						p.setTotalAllocation(p.getTotalAllocation()+percentage);
 						p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
-			}
+						System.out.println(a.getEmployee().getFname());
+					}// end inner if
+				} //end outer else
+				else{
+					p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
+				    double percentage = (double)a.getPercent()/100;
+					p.setTotalAllocation(p.getTotalAllocation()+percentage);
+					p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
+					System.out.println(a.getEmployee().getFname());
 				}
-			}
-		}
+			} //end for inner for
+		} //end outer for
 
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList, false);
 		parameterMap.put("dataSource", jrDataSource);

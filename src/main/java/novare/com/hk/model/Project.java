@@ -31,7 +31,7 @@ public class Project {
 	@Transient
 	private double dailyCost;
 
-	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
 	private List<Allocation> allocations;
 
 	private String client;
