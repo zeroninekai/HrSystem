@@ -7,11 +7,13 @@ import novare.com.hk.model.Project;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	
-	@Query(value = "SELECT p from Project p WHERE project_name = ?1 OR client = ?1")
-	public List<Project> searchProject(String search_param);
+	@Query("SELECT p from Project p WHERE LOWER(project_name) LIKE CONCAT('%',:searchParam,'%')"
+			+ " OR LOWER(client) LIKE CONCAT('%',:searchParam,'%')")
+	public List<Project> searchProject(@Param("searchParam") String searchParam);
 	
 	@Query("SELECT p FROM Project p WHERE project_name = ?1")
 	public List<Project> filterProject(String filterStat);
