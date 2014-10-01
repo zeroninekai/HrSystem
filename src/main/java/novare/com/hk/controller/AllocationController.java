@@ -105,22 +105,7 @@ public class AllocationController {
 		allocation = allocationService.getAllocation(Integer.parseInt(id));
 		allocation.setEmployee_name(allocation.getEmployee().getFname() + " " + allocation.getEmployee().getLname());
 		allocation.setProject_name(allocation.getProject().getProject_name());
-		
-		/**			Remove duplicate names from projects list			***/
-			List<Project> projectListView = projectService.getProjectList();
-			List<String> proj_names = new ArrayList<String>();
-			List<String> names = new ArrayList<String>();
-			for (Project p : projectListView) {
-				proj_names.add(p.getProject_name());
-			}
-			Set<String> uniqueNames = new HashSet<String>(proj_names);
-			proj_names.clear();
-			proj_names = new ArrayList<String>(uniqueNames);
-			for (Object obj : proj_names) {
-				names.add(obj.toString());
-			}
-		/*****************************************************************/
-			
+				
 			Set<Map.Entry<String, Integer>> projects;
 			List<Project> projectsList = projectService.getProjectList();
 			final Map<String, Integer> projectsMap = new HashMap<String, Integer>();
@@ -136,7 +121,7 @@ public class AllocationController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("allocation", allocation);
-		map.put("names", names);
+		map.put("names", arrangeDropdownProj());
 		map.put("empID", allocation.getEmployee().getId());
 
 		return new ModelAndView("editAllocation", "map", map);
@@ -197,26 +182,8 @@ public class AllocationController {
 	public ModelAndView searchAllocationList(@RequestParam String searchquery,
 			@ModelAttribute Project project,@ModelAttribute Allocation allocation) {
 		
-		List<Project> allocationListView = projectService.getProjectList();
-		List<String> proj_names = new ArrayList<String>();
-		List<String> names = new ArrayList<String>();
-
-		for (Project p : allocationListView) {
-			proj_names.add(p.getProject_name());
-		}
-
-		Set<String> uniqueNames = new HashSet<String>(proj_names);
-		proj_names.clear();
-
-		proj_names = new ArrayList<String>(uniqueNames);
-		for (Object obj : proj_names) {
-			names.add(obj.toString());
-		}
-
 		Map<String, Object> map = new HashMap<String, Object>();
-		Collections.sort(names);
-
-		map.put("names", names);
+		map.put("names", arrangeDropdownProj());
 		map.put("allocationList", arrangeNames(allocationService.searchAllocation(searchquery) ));
 
 		return new ModelAndView("viewAllocationList", "map", map);
