@@ -88,41 +88,12 @@ public class AllocationController {
 
 	@RequestMapping("/viewAllocationList")
 	public ModelAndView getAllocationList(@ModelAttribute Project project, @ModelAttribute Allocation allocation) {
+		
+		projectList = projectService.getProjectList();
 
-		/***
-		 * setting up employee name and project name for the table JSP View of
-		 * allocations
-		 ***/
-			List<Allocation> allocationList = allocationService.getAllocationList();
-			projectList = projectService.getProjectList();
-			if(allocationList != null){
-				for (Allocation a : allocationList) {
-					a.setEmployee_name(a.getEmployee().getFname() + " "
-							+ a.getEmployee().getLname());
-					a.setProject_name(a.getProject().getProject_name());
-				}
-			}
-		/**********************************************************************/
-
-		/***** 	for project names under filter dropdown	 *****/
-			List<Project> projectListDbox = projectService.getProjectList();
-			List<String> proj_names = new ArrayList<String>();
-			List<String> names = new ArrayList<String>();
-			for (Project p : projectListDbox) {
-				proj_names.add(p.getProject_name());
-			}
-			Set<String> se = new HashSet<String>(proj_names);
-			proj_names.clear();
-			proj_names = new ArrayList<String>(se);
-			for (Object obj : proj_names) {
-				names.add(obj.toString());
-			}
-			Map<String, Object> map = new HashMap<String, Object>();
-			Collections.sort(names);
-		/*************************************************/
-
-		map.put("names", names);
-		map.put("allocationList", allocationList);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("names", arrangeDropdownProj() );
+		map.put("allocationList", arrangeNames(allocationService.getAllocationList() ));
 
 		return new ModelAndView("viewAllocationList", "map", map);
 	}
@@ -211,39 +182,13 @@ public class AllocationController {
 	}
 
 	@RequestMapping("/filterAlloc")
-	public ModelAndView filterAllocationList(@RequestParam String project_name,
-			@ModelAttribute Project project, @ModelAttribute Allocation allocation) {
-		List<Allocation> allocationList = allocationService.filterAllocation(project_name);
-		projectList = projectService.filterProject(project_name);
-		if(allocationList != null){
-			for (Allocation a : allocationList) {
-				a.setEmployee_name(a.getEmployee().getFname() + " "
-						+ a.getEmployee().getLname());
-				a.setProject_name(a.getProject().getProject_name());
-			}
-		}
+	public ModelAndView filterAllocationList(@RequestParam String project_name, @ModelAttribute Project project, @ModelAttribute Allocation allocation) {
 		
-		List<Project> allocationListView = projectService.getProjectList();
-		List<String> proj_names = new ArrayList<String>();
-		List<String> names = new ArrayList<String>();
-
-		for (Project p : allocationListView) {
-			proj_names.add(p.getProject_name());
-		}
-
-		Set<String> uniqueNames = new HashSet<String>(proj_names);
-		proj_names.clear();
-
-		proj_names = new ArrayList<String>(uniqueNames);
-		for (Object obj : proj_names) {
-			names.add(obj.toString());
-		}
-
+		projectList = projectService.filterProject(project_name);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		Collections.sort(names);
-
-		map.put("names", names);
-		map.put("allocationList", allocationList);
+		map.put("names", arrangeDropdownProj() );
+		map.put("allocationList", arrangeNames(allocationService.filterAllocation(project_name) ));
 
 		return new ModelAndView("viewAllocationList", "map", map);
 	}
@@ -251,16 +196,6 @@ public class AllocationController {
 	@RequestMapping("/searchAlloc")
 	public ModelAndView searchAllocationList(@RequestParam String searchquery,
 			@ModelAttribute Project project,@ModelAttribute Allocation allocation) {
-		List<Allocation> allocationList = allocationService
-				.searchAllocation(searchquery);
-		
-		if(allocationList != null){
-			for (Allocation a : allocationList) {
-				a.setEmployee_name(a.getEmployee().getFname() + " "
-						+ a.getEmployee().getLname());
-				a.setProject_name(a.getProject().getProject_name());
-			}
-		}
 		
 		List<Project> allocationListView = projectService.getProjectList();
 		List<String> proj_names = new ArrayList<String>();
@@ -282,7 +217,7 @@ public class AllocationController {
 		Collections.sort(names);
 
 		map.put("names", names);
-		map.put("allocationList", allocationList);
+		map.put("allocationList", arrangeNames(allocationService.searchAllocation(searchquery) ));
 
 		return new ModelAndView("viewAllocationList", "map", map);
 	}
@@ -344,5 +279,35 @@ public class AllocationController {
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(
 				dateFormat, true));
+	}
+
+	private List<Allocation> arrangeNames(List<Allocation> allocationList){
+		/* set up employee name; employee.fname + employee.lname to transient field and project name */
+		if(allocationList != null){
+			for (Allocation a : allocationList) {
+				a.setEmployee_name(a.getEmployee().getFname() + " " + a.getEmployee().getLname());
+				a.setProject_name(a.getProject().getProject_name());
+			}
+		}
+		return allocationList;
+	}
+	
+	private List<String> arrangeDropdownProj(){
+		/*	for project names under filter dropdown	 */
+		List<Project> projectListDbox = projectService.getProjectList();
+		List<String> proj_names = new ArrayList<String>();
+		List<String> names = new ArrayList<String>();
+		for (Project p : projectListDbox) {
+			proj_names.add(p.getProject_name());
+		}
+		Set<String> se = new HashSet<String>(proj_names);
+		proj_names.clear();
+		proj_names = new ArrayList<String>(se);
+		for (Object obj : proj_names) {
+			names.add(obj.toString());
+		}
+		Collections.sort(names);
+		
+		return names;
 	}
 }
