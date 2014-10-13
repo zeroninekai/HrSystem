@@ -21,4 +21,6 @@ public interface ProjectService {
 	public List<Project> filterProject(String project_name);
 	
 	public List<Project> getReport(Date dateParam, Date endDateParam);
+	
+	public List<Project> gen(Date startDateParam, Date endDateParam);
 }

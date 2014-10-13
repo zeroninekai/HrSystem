@@ -1,5 +1,6 @@
 package novare.com.hk.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -22,14 +23,36 @@ public class Project {
 	@GeneratedValue
 	private int id;
 
-	@Transient
+	
 	private long plannedHeadCount;
 
-	@Transient
-	private double totalAllocation;
+	
+	private BigDecimal totalAllocation;
 
-	@Transient
+	
 	private double dailyCost;
+	
+	
+	private String month;
+	
+	
+	private String year;
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
 
 	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
 	private List<Allocation> allocations;
@@ -84,7 +107,7 @@ public class Project {
 		return start_date;
 	}
 
-	public double getTotalAllocation() {
+	public BigDecimal getTotalAllocation() {
 		return totalAllocation;
 	}
 
@@ -124,7 +147,7 @@ public class Project {
 		this.start_date = start_date;
 	}
 
-	public void setTotalAllocation(double totalAllocation) {
+	public void setTotalAllocation(BigDecimal totalAllocation) {
 		this.totalAllocation = totalAllocation;
 	}
 }

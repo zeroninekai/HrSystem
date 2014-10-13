@@ -193,9 +193,7 @@ public class AllocationController {
 	public ModelAndView jasperDownloadPdf(@RequestParam Date reportStartDate, @RequestParam Date reportEndDate, ModelAndView mv) {
 		System.out.println("------------------Downloading PDF------------------");
 
-		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		
-		if(reportStartDate != null || reportEndDate != null){
+/*		if(reportStartDate != null || reportEndDate != null){
 			projectList = projectService.getReport(reportStartDate, reportEndDate);
 			System.out.println("====\nreport \nservice \nproject \n====\n");
 		}	
@@ -232,7 +230,9 @@ public class AllocationController {
 				}
 			} //end for inner for
 		} //end outer for
-
+*/
+		projectList = projectService.gen(reportStartDate, reportEndDate);
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList, false);
 		parameterMap.put("dataSource", jrDataSource);
 

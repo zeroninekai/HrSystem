@@ -65,4 +65,17 @@ public class ProjectServiceImpl implements ProjectService {
 			return projectRepository.findAll();
 		}
 	}
+
+	@Transactional
+	public List<Project> gen(Date startDateParam, Date endDateParam) {
+		if(startDateParam != null && endDateParam != null){
+			return projectRepository.gen(startDateParam, endDateParam);
+		}
+		else if(startDateParam != null && endDateParam == null){
+			return projectRepository.gen(startDateParam);
+		}
+		else{
+			return projectRepository.findAll();
+		}
+	}
 }
