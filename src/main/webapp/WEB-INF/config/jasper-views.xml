@@ -16,6 +16,11 @@
          	p:url="classpath:f1.jrxml"
          	p:reportDataKey="dataSource"/>
          	
+         	    <bean	id="pdfReportf2" 
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+         	p:url="classpath:f2.jrxml"
+         	p:reportDataKey="dataSource"/>
+         	
     <bean	id="pdfReportAllocFilterSearch" 
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
          	p:url="classpath:allocation_HrSystem.jrxml"

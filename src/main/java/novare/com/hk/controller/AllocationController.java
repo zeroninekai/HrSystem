@@ -44,6 +44,8 @@ public class AllocationController {
 	ProjectService projectService;
 
 	List<Project> projectList;
+	List<Allocation> allocationList;
+	boolean isFiltered = false;
 	
 	@RequestMapping(value = "/addAllocation", method = RequestMethod.GET)
 	public String addAllocation(@ModelAttribute Allocation allocation,
@@ -169,7 +171,9 @@ public class AllocationController {
 	@RequestMapping("/filterAlloc")
 	public ModelAndView filterAllocationList(@RequestParam String project_name, @ModelAttribute Project project, @ModelAttribute Allocation allocation) {
 		
-		projectList = projectService.filterProject(project_name);
+		allocationList = allocationService.filterAllocation(project_name);
+		isFiltered = true;
+		//projectList = projectService.filterProject(project_name);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("names", arrangeDropdownProj() );
@@ -233,10 +237,24 @@ public class AllocationController {
 */
 		projectList = projectService.gen(reportStartDate, reportEndDate);
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList, false);
-		parameterMap.put("dataSource", jrDataSource);
-
-		mv = new ModelAndView("pdfReportAlloc", parameterMap);
+		if(isFiltered){
+			JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList, false);
+			parameterMap.put("dataSource", jrDataSource);
+			mv = new ModelAndView("pdfReportf2", parameterMap);
+		}
+		else if(!isFiltered && (reportStartDate.equals(null) && reportEndDate.equals(null))){
+			allocationList = allocationService.getAllocationList();
+			JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList, false);
+			parameterMap.put("dataSource", jrDataSource);
+			mv = new ModelAndView("pdfReportf2", parameterMap);
+		}
+		else{
+			JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList, false);
+			parameterMap.put("dataSource", jrDataSource);
+			mv = new ModelAndView("pdfReportAlloc", parameterMap);
+		}
+		
+		isFiltered = false;
 		return mv;
 	}
 
