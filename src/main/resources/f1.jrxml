@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="f1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.610510000000001"/>
-	<property name="ireport.x" value="215"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="98"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -24,7 +24,7 @@ GROUP BY YEAR(allocation.start_date), MONTH(allocation.start_date),  projects.pr
 	<field name="month" class="java.lang.String"/>
 	<field name="year" class="java.lang.String"/>
 	<field name="plannedHeadCount" class="java.lang.Long"/>
-	<field name="totalAllocation" class="java.math.BigDecimal"/>
+	<field name="totalAllocation" class="java.lang.Double"/>
 	<field name="dailyCost" class="java.lang.Double"/>
 	<background>
 		<band/>
@@ -123,7 +123,7 @@ GROUP BY YEAR(allocation.start_date), MONTH(allocation.start_date),  projects.pr
 			<textField>
 				<reportElement mode="Opaque" x="368" y="0" width="92" height="20" backcolor="#CCCCCC"/>
 				<textElement lineSpacing="Single"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totalAllocation}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{totalAllocation}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="460" y="0" width="92" height="20" backcolor="#CCCCCC"/>

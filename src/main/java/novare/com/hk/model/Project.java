@@ -27,7 +27,7 @@ public class Project {
 	private long plannedHeadCount;
 
 	
-	private BigDecimal totalAllocation;
+	private Double totalAllocation;
 
 	
 	private double dailyCost;
@@ -107,7 +107,7 @@ public class Project {
 		return start_date;
 	}
 
-	public BigDecimal getTotalAllocation() {
+	public Double getTotalAllocation() {
 		return totalAllocation;
 	}
 
@@ -147,7 +147,7 @@ public class Project {
 		this.start_date = start_date;
 	}
 
-	public void setTotalAllocation(BigDecimal totalAllocation) {
+	public void setTotalAllocation(Double totalAllocation) {
 		this.totalAllocation = totalAllocation;
 	}
 }

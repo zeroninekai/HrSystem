@@ -1,6 +1,10 @@
 package novare.com.hk.controller;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -170,10 +174,33 @@ public class AllocationController {
 
 	@RequestMapping("/filterAlloc")
 	public ModelAndView filterAllocationList(@RequestParam String project_name, @ModelAttribute Project project, @ModelAttribute Allocation allocation) {
-		
+		projectList.clear();
 		allocationList = allocationService.filterAllocation(project_name);
 		isFiltered = true;
 		//projectList = projectService.filterProject(project_name);
+		
+		List<Object[]> rows = projectService.filterAlloc(project_name);
+		if(rows != null){
+			for (Object[] row: rows) {
+			    System.out.println(" ------------------- ");
+			    System.out.println("project_name: " + row[0]);
+			    System.out.println("month: " + row[1]);
+			    System.out.println("year: " + row[2]);
+			    System.out.println("headcount: " + row[3]);
+			    System.out.println("totalAllocation: " + row[4]);
+			    System.out.println("dailyCost: " + row[5]);
+			   
+			    Project p = new Project();
+			    p.setProject_name(row[0].toString());
+			    p.setMonth(row[1].toString());
+			    p.setYear(row[2].toString());
+			    p.setPlannedHeadCount(Long.parseLong(row[3].toString()));
+			    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
+			    p.setDailyCost(Double.parseDouble(row[5].toString()));
+			    projectList.add(p);
+			    
+			}
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("names", arrangeDropdownProj() );
@@ -196,51 +223,37 @@ public class AllocationController {
 	@RequestMapping(value = "/reportPDFAlloc", method = RequestMethod.GET)
 	public ModelAndView jasperDownloadPdf(@RequestParam Date reportStartDate, @RequestParam Date reportEndDate, ModelAndView mv) {
 		System.out.println("------------------Downloading PDF------------------");
-
-/*		if(reportStartDate != null || reportEndDate != null){
-			projectList = projectService.getReport(reportStartDate, reportEndDate);
-			System.out.println("====\nreport \nservice \nproject \n====\n");
-		}	
-	
-		
-		for(Project p : projectList){
-			System.out.print(p.getProject_name() + ": ");
-			List<Allocation> allocationList = p.getAllocations();
-			for(Allocation a : allocationList){
-				if(reportEndDate != null){
-					if((a.getStart_date().after(reportStartDate) || a.getStart_date().equals(reportStartDate)) && (a.getStart_date().before(reportEndDate) || a.getStart_date().equals(reportEndDate))){
-						p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
-					    double percentage = (double)a.getPercent()/100;
-						p.setTotalAllocation(p.getTotalAllocation()+percentage);
-						p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
-						System.out.println(a.getEmployee().getFname());
-					}// end inner if
-				} //end outer if
-				else if(reportStartDate != null){
-					if((a.getStart_date().after(reportStartDate) || a.getStart_date().equals(reportStartDate))){
-						p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
-					    double percentage = (double)a.getPercent()/100;
-						p.setTotalAllocation(p.getTotalAllocation()+percentage);
-						p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
-						System.out.println(a.getEmployee().getFname());
-					}// end inner if
-				} //end outer else
-				else{
-					p.setPlannedHeadCount(p.getPlannedHeadCount()+1);
-				    double percentage = (double)a.getPercent()/100;
-					p.setTotalAllocation(p.getTotalAllocation()+percentage);
-					p.setDailyCost(p.getDailyCost()+a.getEmployee().getCost()*percentage);
-					System.out.println(a.getEmployee().getFname());
-				}
-			} //end for inner for
-		} //end outer for
-*/
-		projectList = projectService.gen(reportStartDate, reportEndDate);
+		if(reportStartDate != null || reportEndDate != null){
+		List<Object[]> rows = projectService.gen1(reportStartDate, reportEndDate);
+		if(rows != null && !isFiltered){
+			projectList.clear();
+			for (Object[] row: rows) {
+			    System.out.println(" ------------------- ");
+			    System.out.println("project_name: " + row[0]);
+			    System.out.println("month: " + row[1]);
+			    System.out.println("year: " + row[2]);
+			    System.out.println("headcount: " + row[3]);
+			    System.out.println("totalAllocation: " + row[4]);
+			    System.out.println("dailyCost: " + row[5]);
+			   
+			    Project p = new Project();
+			    p.setProject_name(row[0].toString());
+			    p.setMonth(row[1].toString());
+			    p.setYear(row[2].toString());
+			    p.setPlannedHeadCount(Long.parseLong(row[3].toString()));
+			    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
+			    p.setDailyCost(Double.parseDouble(row[5].toString()));
+			    projectList.add(p);
+			    
+			}
+		}
+		}
+		//projectList = projectService.gen(reportStartDate, reportEndDate);
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		if(isFiltered){
-			JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList, false);
+			JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList, false);
 			parameterMap.put("dataSource", jrDataSource);
-			mv = new ModelAndView("pdfReportf2", parameterMap);
+			mv = new ModelAndView("pdfReportAlloc", parameterMap);
 		}
 		else if(!isFiltered && (reportStartDate.equals(null) && reportEndDate.equals(null))){
 			allocationList = allocationService.getAllocationList();
@@ -294,5 +307,27 @@ public class AllocationController {
 		Collections.sort(names);
 		
 		return names;
+	}
+	
+	private BigDecimal parseBigDecimal(String stringToBeParsed){
+	    // Parse BigDecimal
+	    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+	    symbols.setGroupingSeparator(',');
+	    symbols.setDecimalSeparator('.');
+	    String pattern = "#,##0.0#";
+	    DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
+	    decimalFormat.setParseBigDecimal(true);
+
+	    BigDecimal parsedTotalAlloc = null;
+		try 
+		{
+			parsedTotalAlloc = (BigDecimal) decimalFormat.parse(stringToBeParsed);
+		} catch (ParseException e) 
+		{
+			e.printStackTrace();
+		}
+	    // end parse
+		System.out.println(parsedTotalAlloc);
+		return parsedTotalAlloc;
 	}
 }
