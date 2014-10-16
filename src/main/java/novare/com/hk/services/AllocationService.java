@@ -24,4 +24,6 @@ public interface AllocationService {
 	public List<Allocation> searchAllocation(String searchquery);
 	
 	public List<Allocation> getReport(Date dateParam, Date endDateParam);
+	
+	public List<Object[]> defaultAlloc();
 }

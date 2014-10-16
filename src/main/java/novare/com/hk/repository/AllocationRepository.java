@@ -25,4 +25,15 @@ public interface AllocationRepository extends JpaRepository<Allocation, Integer>
 			+ "  WHERE a.start_date BETWEEN ?1 AND ?2")
 	public List<Allocation> generateReport(Date dateParam, Date endDateParam);
 
+	@Query(value="SELECT p.project_name AS project_name, " +
+			"MONTHNAME(alloc.start_date), " +
+			"YEAR(alloc.start_date), " +
+			"COUNT(alloc.employee.id), " + 
+			"SUM((alloc.percent/100.0000)), " +
+			"SUM((alloc.employee.cost*alloc.percent/100)) "+
+			"from Allocation alloc " +
+			"INNER JOIN alloc.project as p " +
+			"INNER JOIN alloc.employee as e " + 
+			"GROUP BY YEAR(alloc.start_date), MONTH(alloc.start_date),  p.project_name")
+	public List<Object[]> defaultAlloc();
 }

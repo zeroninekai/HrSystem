@@ -175,9 +175,7 @@ public class AllocationController {
 	@RequestMapping("/filterAlloc")
 	public ModelAndView filterAllocationList(@RequestParam String project_name, @ModelAttribute Project project, @ModelAttribute Allocation allocation) {
 		projectList.clear();
-		allocationList = allocationService.filterAllocation(project_name);
 		isFiltered = true;
-		//projectList = projectService.filterProject(project_name);
 		
 		List<Object[]> rows = projectService.filterAlloc(project_name);
 		if(rows != null){
@@ -224,48 +222,63 @@ public class AllocationController {
 	public ModelAndView jasperDownloadPdf(@RequestParam Date reportStartDate, @RequestParam Date reportEndDate, ModelAndView mv) {
 		System.out.println("------------------Downloading PDF------------------");
 		if(reportStartDate != null || reportEndDate != null){
-		List<Object[]> rows = projectService.gen1(reportStartDate, reportEndDate);
-		if(rows != null && !isFiltered){
-			projectList.clear();
-			for (Object[] row: rows) {
-			    System.out.println(" ------------------- ");
-			    System.out.println("project_name: " + row[0]);
-			    System.out.println("month: " + row[1]);
-			    System.out.println("year: " + row[2]);
-			    System.out.println("headcount: " + row[3]);
-			    System.out.println("totalAllocation: " + row[4]);
-			    System.out.println("dailyCost: " + row[5]);
-			   
-			    Project p = new Project();
-			    p.setProject_name(row[0].toString());
-			    p.setMonth(row[1].toString());
-			    p.setYear(row[2].toString());
-			    p.setPlannedHeadCount(Long.parseLong(row[3].toString()));
-			    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
-			    p.setDailyCost(Double.parseDouble(row[5].toString()));
-			    projectList.add(p);
-			    
+			System.out.println("1st con");
+			List<Object[]> rows = projectService.gen1(reportStartDate, reportEndDate);
+			if(rows != null && !isFiltered){
+				projectList.clear();
+				for (Object[] row: rows) {
+				    System.out.println(" ------------------- ");
+				    System.out.println("project_name: " + row[0]);
+				    System.out.println("month: " + row[1]);
+				    System.out.println("year: " + row[2]);
+				    System.out.println("headcount: " + row[3]);
+				    System.out.println("totalAllocation: " + row[4]);
+				    System.out.println("dailyCost: " + row[5]);
+				   
+				    Project p = new Project();
+				    p.setProject_name(row[0].toString());
+				    p.setMonth(row[1].toString());
+				    p.setYear(row[2].toString());
+				    p.setPlannedHeadCount(Long.parseLong(row[3].toString()));
+				    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
+				    p.setDailyCost(Double.parseDouble(row[5].toString()));
+				    projectList.add(p);
+				    
+				}
 			}
 		}
-		}
-		//projectList = projectService.gen(reportStartDate, reportEndDate);
+
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		if(isFiltered){
+		
+		if(!isFiltered && 
+				(reportStartDate == null && reportEndDate == null)){
+			System.out.println("!filtered and dates null");
+			
+			projectList.clear();
+			List<Object[]> rows = allocationService.defaultAlloc();
+			if(rows != null){
+				for (Object[] row: rows) {
+				    Project p = new Project();
+				    p.setProject_name(row[0].toString());
+				    p.setMonth(row[1].toString());
+				    p.setYear(row[2].toString());
+				    p.setPlannedHeadCount(Long.parseLong(row[3].toString()));
+				    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
+				    p.setDailyCost(Double.parseDouble(row[5].toString()));
+				    projectList.add(p);
+				}
+			}
 			JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList, false);
 			parameterMap.put("dataSource", jrDataSource);
 			mv = new ModelAndView("pdfReportAlloc", parameterMap);
-		}
-		else if(!isFiltered && (reportStartDate.equals(null) && reportEndDate.equals(null))){
-			allocationList = allocationService.getAllocationList();
-			JRDataSource jrDataSource = new JRBeanCollectionDataSource(allocationList, false);
-			parameterMap.put("dataSource", jrDataSource);
-			mv = new ModelAndView("pdfReportf2", parameterMap);
 		}
 		else{
+			System.out.println("generate report");
 			JRDataSource jrDataSource = new JRBeanCollectionDataSource(projectList, false);
 			parameterMap.put("dataSource", jrDataSource);
 			mv = new ModelAndView("pdfReportAlloc", parameterMap);
 		}
+
 		
 		isFiltered = false;
 		return mv;

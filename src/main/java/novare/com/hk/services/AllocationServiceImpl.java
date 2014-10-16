@@ -62,4 +62,9 @@ public class AllocationServiceImpl implements AllocationService{
 		// TODO Auto-generated method stub
 		return allocationRepository.generateReport(dateParam, endDateParam);
 	}
+
+	public List<Object[]> defaultAlloc() {
+		// TODO Auto-generated method stub
+		return allocationRepository.defaultAlloc();
+	}
 }
