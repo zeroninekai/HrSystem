@@ -36,9 +36,6 @@ public class Allocation {
 	private Date end_date;
 
 	@Transient
-	private String searchquery;
-
-	@Transient
 	@Temporal(TemporalType.DATE)
 	private Date reportStartDate;
 
@@ -47,20 +44,10 @@ public class Allocation {
 	private Date reportEndDate;
 
 	@Transient
-	private double totalAlloc;
-
-	@Transient
-	private double dailyCostMonth;
-
-	@Transient
 	private String employee_name;
 
 	@Transient
 	private String project_name;
-
-	public double getDailyCostMonth() {
-		return dailyCostMonth;
-	}
 
 	public Employee getEmployee() {
 		return employee;
@@ -98,20 +85,8 @@ public class Allocation {
 		return reportStartDate;
 	}
 
-	public String getSearchquery() {
-		return searchquery;
-	}
-
 	public Date getStart_date() {
 		return start_date;
-	}
-
-	public double getTotalAlloc() {
-		return totalAlloc;
-	}
-
-	public void setDailyCostMonth(double dailyCostMonth) {
-		this.dailyCostMonth = dailyCostMonth;
 	}
 
 	public void setEmployee(Employee employee) {
@@ -150,15 +125,7 @@ public class Allocation {
 		this.reportStartDate = reportStartDate;
 	}
 
-	public void setSearchquery(String searchquery) {
-		this.searchquery = searchquery;
-	}
-
 	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
-	}
-
-	public void setTotalAlloc(double totalAlloc) {
-		this.totalAlloc = totalAlloc;
 	}
 }

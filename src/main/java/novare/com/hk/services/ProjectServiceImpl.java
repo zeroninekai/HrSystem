@@ -65,21 +65,4 @@ public class ProjectServiceImpl implements ProjectService {
 			return projectRepository.findAll();
 		}
 	}
-
-	public List<Object[]> gen1(Date startDateParam, Date endDateParam) {
-		// TODO Auto-generated method stub
-		if(startDateParam != null && endDateParam == null){
-			return projectRepository.gen1(startDateParam);
-		}
-		else if(startDateParam != null && endDateParam != null){
-			return projectRepository.gen1(startDateParam, endDateParam);
-		}
-		else{
-			return null;
-		}
-	}
-	
-	public List<Object[]> filterAlloc(String project_name){
-		return projectRepository.filterAlloc(project_name);
-	}
 }

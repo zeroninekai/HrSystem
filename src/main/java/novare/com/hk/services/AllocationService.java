@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import novare.com.hk.model.Allocation;
+import novare.com.hk.model.Project;
 
 public interface AllocationService {
 	
@@ -16,14 +17,15 @@ public interface AllocationService {
 	public void deleteData(int id);
 
 	public Allocation getAllocation(int id);
-
-	public List<Allocation> getViewAlloc();
 	
 	public List<Allocation> filterAllocation(String project_name);
 	
 	public List<Allocation> searchAllocation(String searchquery);
 	
-	public List<Allocation> getReport(Date dateParam, Date endDateParam);
+	public List<Project> defaultAlloc(List<Project> projectList);
 	
-	public List<Object[]> defaultAlloc();
+	public List<Project> filterPdf(List<Project> projectList,String project_name);
+	
+	public List<Project> generatePdf(Date startDateParam, Date endDateParam, List<Project> projectList);
+	
 }

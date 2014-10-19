@@ -1,6 +1,5 @@
 package novare.com.hk.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -23,36 +22,20 @@ public class Project {
 	@GeneratedValue
 	private int id;
 
-	
+	@Transient
 	private long plannedHeadCount;
 
-	
+	@Transient
 	private Double totalAllocation;
 
-	
+	@Transient
 	private double dailyCost;
 	
-	
+	@Transient
 	private String month;
 	
-	
+	@Transient
 	private String year;
-
-	public String getMonth() {
-		return month;
-	}
-
-	public void setMonth(String month) {
-		this.month = month;
-	}
-
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
 
 	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
 	private List<Allocation> allocations;
@@ -87,8 +70,13 @@ public class Project {
 		return end_date;
 
 	}
+
 	public int getId() {
 		return id;
+	}
+
+	public String getMonth() {
+		return month;
 	}
 
 	public long getPlannedHeadCount() {
@@ -98,7 +86,6 @@ public class Project {
 	public String getProject_name() {
 		return project_name;
 	}
-
 	public String getSearchquery() {
 		return searchquery;
 	}
@@ -109,6 +96,10 @@ public class Project {
 
 	public Double getTotalAllocation() {
 		return totalAllocation;
+	}
+
+	public String getYear() {
+		return year;
 	}
 
 	public void setAllocations(List<Allocation> allocations) {
@@ -131,6 +122,10 @@ public class Project {
 		this.id = id;
 	}
 
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
 	public void setPlannedHeadCount(long plannedHeadCount) {
 		this.plannedHeadCount = plannedHeadCount;
 	}
@@ -149,5 +144,9 @@ public class Project {
 
 	public void setTotalAllocation(Double totalAllocation) {
 		this.totalAllocation = totalAllocation;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 }

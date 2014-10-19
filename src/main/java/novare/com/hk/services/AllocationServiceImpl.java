@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import novare.com.hk.model.Allocation;
+import novare.com.hk.model.Project;
 import novare.com.hk.repository.AllocationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +44,6 @@ public class AllocationServiceImpl implements AllocationService{
 	}
 	
 	@Transactional
-	public List<Allocation> getViewAlloc() {
-		return allocationRepository.findAll();
-	}
-	
-	@Transactional
 	public List<Allocation> filterAllocation(String project_name){
 		return allocationRepository.filterAllocation(project_name);
 	}
@@ -58,13 +54,67 @@ public class AllocationServiceImpl implements AllocationService{
 	}
 
 	@Transactional
-	public List<Allocation> getReport(Date dateParam, Date endDateParam) {
-		// TODO Auto-generated method stub
-		return allocationRepository.generateReport(dateParam, endDateParam);
+	public List<Project> defaultAlloc(List<Project> projectList) {
+		projectList.clear();
+		List<Object[]> rows = allocationRepository.defaultAlloc();
+		if(rows != null){
+			for (Object[] row: rows) {
+			    Project p = new Project();
+			    p.setProject_name(row[0].toString());
+			    p.setMonth(row[1].toString());
+			    p.setYear(row[2].toString());
+			    p.setPlannedHeadCount(Long.parseLong(row[3].toString()));
+			    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
+			    p.setDailyCost(Double.parseDouble(row[5].toString()));
+			    projectList.add(p);
+			}
+		}
+		return projectList;
 	}
 
-	public List<Object[]> defaultAlloc() {
-		// TODO Auto-generated method stub
-		return allocationRepository.defaultAlloc();
+	@Transactional
+	public List<Project> filterPdf(List<Project> projectList, String project_name) {
+		projectList.clear();
+		List<Object[]> rows = allocationRepository.filterPdf(project_name);
+		if(rows != null){
+			for (Object[] row: rows) {
+			    Project p = new Project();
+			    p.setProject_name(row[0].toString());
+			    p.setMonth(row[1].toString());
+			    p.setYear(row[2].toString());
+			    p.setPlannedHeadCount(Long.parseLong(row[3].toString()));
+			    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
+			    p.setDailyCost(Double.parseDouble(row[5].toString()));
+			    projectList.add(p);	    
+			}
+		}
+		return projectList;
+	}
+	
+	@Transactional
+	public List<Project> generatePdf(Date startDateParam, Date endDateParam, List<Project> projectList) {
+
+		List<Object[]> rows;
+		if(startDateParam != null && endDateParam != null){ // two dates entered
+			rows = allocationRepository.generatePdf(startDateParam, endDateParam);
+		}
+		else{ // one date entered --starting date--
+			rows = allocationRepository.generatePdf(startDateParam);
+		}
+		
+		if(rows != null){
+			projectList.clear();
+			for (Object[] row: rows) {
+			    Project p = new Project();
+			    p.setProject_name(row[0].toString());
+			    p.setMonth(row[1].toString());
+			    p.setYear(row[2].toString());
+			    p.setPlannedHeadCount(Long.parseLong(row[3].toString()));
+			    p.setTotalAllocation(Double.parseDouble(row[4].toString()));
+			    p.setDailyCost(Double.parseDouble(row[5].toString()));
+			    projectList.add(p);    
+			}
+		}
+		return projectList;
 	}
 }
