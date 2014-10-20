@@ -237,7 +237,6 @@ public class AllocationController {
         return new ModelAndView("viewProjectDateQuery", "map", map);
     }
 
-
     @InitBinder
 	public void initBinder(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
