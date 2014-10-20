@@ -12,9 +12,9 @@ import novare.com.hk.repository.ProjectRepository;
 
 @Service("projectService")
 public class ProjectServiceImpl implements ProjectService {
-	
+
 	@Autowired
-	private ProjectRepository projectRepository; 
+	private ProjectRepository projectRepository;
 
 	@Transactional
 	public void insertData(Project project) {
@@ -45,7 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Project> searchProject(String searchquery){
 		return projectRepository.searchProject(searchquery);
 	}
-	
+
 	@Transactional
 	public List<Project> filterProject(String project_name){
 		return projectRepository.filterProject(project_name);
@@ -65,4 +65,17 @@ public class ProjectServiceImpl implements ProjectService {
 			return projectRepository.findAll();
 		}
 	}
+
+    @Override
+    public List<Object[]> genReport(Date start_date, Date end_date) {
+        if(start_date != null && end_date == null){
+            return projectRepository.genReport(start_date);
+        }
+        else if(start_date != null && end_date != null){
+            return projectRepository.genReport(start_date, end_date);
+        }
+        else{
+            return null;
+        }
+    }
 }

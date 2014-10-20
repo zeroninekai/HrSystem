@@ -44,7 +44,6 @@ public class AllocationController {
 	ProjectService projectService;
 
 	List<Project> projectList;
-	List<Allocation> allocationList;
 	boolean isFiltered = false;
 
 	@RequestMapping(value = "/addAllocation", method = RequestMethod.GET)
@@ -219,7 +218,27 @@ public class AllocationController {
 		return mv;
 	}
 
-	@InitBinder
+    @RequestMapping("/datefilterAlloc")
+    public ModelAndView searchDateList(@RequestParam Date start_date, Date end_date){
+
+        if(start_date != null || end_date != null){ // if user inputs a date on either field
+            System.out.println("user inputs a date on either field");
+            projectList = allocationService.generatePdf(start_date, end_date, projectList);
+        }
+
+        if(!isFiltered && (start_date == null && end_date == null)){ // if user did not filter and null values on dates input
+            System.out.println("user did not filter and null values on dates input");
+            projectList = allocationService.defaultAlloc(projectList);
+        }
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("projectList", projectList);
+
+        return new ModelAndView("viewProjectDateQuery", "map", map);
+    }
+
+
+    @InitBinder
 	public void initBinder(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);

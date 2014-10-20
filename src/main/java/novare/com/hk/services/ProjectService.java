@@ -15,11 +15,12 @@ public interface ProjectService {
 	public void deleteData(int id);
 
 	public Project getProject(int id);
-	
+
 	public List<Project> searchProject(String searchquery);
-	
+
 	public List<Project> filterProject(String project_name);
-	
+
 	public List<Project> getReport(Date dateParam, Date endDateParam);
 
+    public List<Object[]> genReport(Date start_date, Date end_date);
 }
