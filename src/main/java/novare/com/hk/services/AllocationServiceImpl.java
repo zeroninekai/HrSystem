@@ -28,23 +28,21 @@ public class AllocationServiceImpl implements AllocationService{
         // employee's existing value for allocation exceeds 100; which should not be
         else {
             List<Allocation> allocationStorage = allocationRepository.findAll();
+            int totalPercent = 0;
             for (Allocation a : allocationStorage) {
                 // checks if the employee the user is trying to add has an existing entry in allocations db
                 if (a.getEmployee().getId() == allocation.getEmployee().getId()) { //matches or check if allocation's emp ID stored from database is equal to user input allocation emp id which was binded to a dropbox as a name
-                    int totalPercent = allocation.getPercent() + a.getPercent();
-                    if (totalPercent > 100) {
-                        System.out.println("Cannot add employee if more than allocated 100 percent!!!!");
-                        throw new Exception("More than 100 percent!");
-                    }
-                    else {
-                        System.out.println("Saved! :" + totalPercent);
-                        allocationRepository.save(allocation);
-                    }
-                    break; // the for loop should not continue to find any more id if he found the match from database
+                    totalPercent += a.getPercent();
                 }
+            } // end for-loop
+            totalPercent += allocation.getPercent();
+            if (totalPercent > 100) {
+                System.out.println("Cannot add employee if more than allocated 100 percent!!!!");
+                throw new Exception("Cannot insert if allocation is more than 100 percent!");
             }
-            System.out.println("saved!");
-            // allocationRepository.save(allocation);
+            // if no exceptions, below code will execute
+            System.out.println("Saved! :" + totalPercent);
+            allocationRepository.save(allocation);
         }
     }
 
@@ -86,6 +84,7 @@ public class AllocationServiceImpl implements AllocationService{
             if (totalPercent > 100) {
                 throw new Exception("Cannot update employee if more than allocated 100 percent!!!!");
             }
+            // if no exceptions, below code will execute
             System.out.println("!!----Saved----!!");
             allocationRepository.save(allocation);
         }
