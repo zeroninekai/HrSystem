@@ -22,15 +22,13 @@
 				modelAttribute="allocation">
 							<div class="optionElements">
 								<strong>Employee Name :</strong><strong style="padding-left:100px;">Project Name :</strong><strong style="padding-left:160px;">Percent :</strong><br />
-								<form:hidden path="employee.id" value="${map.empID}"/>
+								<form:hidden path="employee.id" value="${map.allocation.employee.id}"/>
 								<c:out value="${map.allocation.employee_name}"/>
 
-								
-								<form:select path="project.id" required="required">
-										<option value="">--Select project--</option>
-										<form:options items="${projects}" var="project" itemValue="value" itemLabel="key"/>
-								</form:select>
-									<span style="padding-left:60px;">
+                                <form:hidden path="project.id" value="${map.allocation.project.id}"/>
+                                <span style="padding-left: 135px;"><c:out value="${map.allocation.project.project_name}"/></span>
+
+									<span style="padding-left:100px;">
 										<form:input path="percent" value="${map.allocation.percent}"
 										required="required" />
 									</span>
@@ -39,7 +37,7 @@
 								<form:input path="start_date"
 									value="${map.allocation.start_date}" type="date"
 									required="required" />
-			
+
 								<span style="padding-left:48px;">
 									<form:input path="end_date" value="${map.allocation.end_date}"
 										type="date" />

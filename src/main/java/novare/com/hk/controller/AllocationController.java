@@ -123,7 +123,6 @@ public class AllocationController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("allocation", allocation);
 		map.put("names", arrangeDropdownProj());
-		map.put("empID", allocation.getEmployee().getId());
 
 		return new ModelAndView("editAllocation", "map", map);
 	}
@@ -131,12 +130,8 @@ public class AllocationController {
 	@RequestMapping("/updateAllocation")
 	public String updateAllocation(@ModelAttribute Allocation allocation) {
 		try {
-			if (allocation.getPercent() > 100 || allocation.getPercent() < 0) {
-				throw new Exception("Invalid Percentage");
-			} else {
-				allocationService.updateData(allocation);
-				return "redirect:/viewAllocationList";
-			}
+            allocationService.updateData(allocation);
+            return "redirect:/viewAllocationList";
 		} catch (Exception ex) {
 			System.out.println("Invalid input. Error is: " + ex.getMessage());
 			return "redirect:/errorPage";
@@ -153,15 +148,10 @@ public class AllocationController {
 	@RequestMapping("/insertAllocation")
 	public String insertAllocation(@ModelAttribute Allocation allocation) {
 		try {
-			if (allocation.getPercent() > 100 || allocation.getPercent() < 0) {
-				throw new Exception("Invalid percentage");
-			}
-			if (allocation != null) {
-				allocationService.insertData(allocation);
-			}
+			allocationService.insertData(allocation);
 			return "redirect:/viewAllocationList";
-
-		} catch (Exception ex) {
+		}
+        catch (Exception ex) {
 			System.out.println("Invalid input. Error is: " + ex.getMessage());
 			return "redirect:/errorPage";
 		}
