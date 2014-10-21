@@ -27,7 +27,7 @@ public class HomeController {
     public ModelAndView indexHandler(){
         System.out.println("!!index here!!");
         projectList = projectService.getProjectList();
-        projectList = allocationService.defaultAlloc(projectList);
+        projectList = allocationService.homeList(projectList);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("projectList", projectList);
         return new ModelAndView("index", "map", map);
