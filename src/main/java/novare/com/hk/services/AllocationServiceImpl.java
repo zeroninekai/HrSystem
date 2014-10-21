@@ -30,6 +30,8 @@ public class AllocationServiceImpl implements AllocationService{
             List<Allocation> allocationStorage = allocationRepository.findAll();
             int totalPercent = 0;
             for (Allocation a : allocationStorage) {
+                if(a.getEmployee().getId() == allocation.getEmployee().getId() && a.getProject().getId() == allocation.getProject().getId())
+                    throw new Exception("Employee is already allocated to that same project you are trying to input");
                 // checks if the employee the user is trying to add has an existing entry in allocations db
                 if (a.getEmployee().getId() == allocation.getEmployee().getId()) { //matches or check if allocation's emp ID stored from database is equal to user input allocation emp id which was binded to a dropbox as a name
                     totalPercent += a.getPercent();
@@ -174,4 +176,20 @@ public class AllocationServiceImpl implements AllocationService{
 		}
 		return projectList;
 	}
+
+    @Transactional
+    public List<Project> homeList(List<Project> projectList) {
+        projectList.clear();
+        List<Object[]> rows = allocationRepository.homeList();
+        if(rows != null){
+            for (Object[] row: rows) {
+                Project p = new Project();
+                p.setProject_name(row[0].toString());
+                p.setPlannedHeadCount(Long.parseLong(row[1].toString()));
+                projectList.add(p);
+            }
+        }
+        return projectList;
+    }
+
 }

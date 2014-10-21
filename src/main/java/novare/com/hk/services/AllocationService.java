@@ -28,4 +28,5 @@ public interface AllocationService {
 
 	public List<Project> generatePdf(Date startDateParam, Date endDateParam, List<Project> projectList);
 
+    public List<Project> homeList(List<Project> projectList);
 }

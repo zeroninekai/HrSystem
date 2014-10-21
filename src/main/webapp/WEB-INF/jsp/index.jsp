@@ -31,12 +31,11 @@
     </h2>
 </div>
 <br />
-<table class="sortable" id="allocPage">
+<center>
+<table class="sortable" id="allocPage" style="width: 65%;">
     <thead>
     <tr>
         <th>Project Name</th>
-        <th>Month</th>
-        <th>Year</th>
         <th>Headcount</th>
     </tr>
     </thead>
@@ -44,17 +43,15 @@
     <c:forEach var="project" items="${map.projectList}">
         <tr>
             <td>${project.project_name}</td>
-            <td>${project.month}</td>
-            <td>${project.year}</td>
             <td>${project.plannedHeadCount}</td>
         </tr>
     </c:forEach>
     </tbody>
     <tfoot>
-    <tr><th class="sorttable_nosort" colspan="11">  </th></tr>
+    <tr><th class="sorttable_nosort" colspan="9">  </th></tr>
     </tfoot>
 </table>
-
+</center>
     <%@include file="/WEB-INF/jsp/footer.jsp"%>
 </body>
 </html>

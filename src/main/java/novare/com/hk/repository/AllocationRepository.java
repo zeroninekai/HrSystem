@@ -69,4 +69,12 @@ public interface AllocationRepository extends JpaRepository<Allocation, Integer>
 			"WHERE alloc.start_date BETWEEN DATE(?1) AND DATE(?2) " +
 			"GROUP BY YEAR(alloc.start_date), MONTH(alloc.start_date),  p.project_name")
 	public List<Object[]> generatePdf(Date startDateParam, Date endDateParam);
+
+
+    @Query(value="SELECT p.project_name AS project_name, " +
+            "COUNT(alloc.employee.id) " +
+            "from Allocation alloc " +
+            "INNER JOIN alloc.project as p " +
+            "GROUP BY p.id")
+    public List<Object[]> homeList();
 }
