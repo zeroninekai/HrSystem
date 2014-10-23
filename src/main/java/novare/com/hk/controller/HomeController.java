@@ -1,6 +1,5 @@
 package novare.com.hk.controller;
 
-import novare.com.hk.model.Allocation;
 import novare.com.hk.model.Employee;
 import novare.com.hk.model.Project;
 import novare.com.hk.services.AllocationService;

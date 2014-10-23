@@ -36,14 +36,14 @@
     <thead>
     <tr>
         <th>Project Name</th>
-        <th>Cost</th>
+        <th>Total Cost</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="project" items="${map.projectList}">
         <tr>
             <td>${project.project_name}</td>
-            <td>${project.dailyCost}</td>
+            <td>Php ${project.dailyCost}</td>
         </tr>
     </c:forEach>
     </tbody>
@@ -72,24 +72,28 @@
     </tfoot>
 </table>
 </div>
+<div class="board2">
 <table class="m" id="employeeExceededAllocs">
     <thead>
     <tr>
         <th>Employee</th>
         <th>Allocation</th>
-        <th>Controls</th>
+     <%--   <th>Controls</th>--%>
     </tr>
     </thead>
     <tbody>
+    <c:if test="${empty map.employeeExceededList}">
+        <tr><td colspan="3">No data available</td></tr>
+    </c:if>
     <c:forEach var="employee" items="${map.employeeExceededList}">
         <tr>
-            <td>${employee.fullName}</td>
+            <td><a href="searchAlloc?searchquery=${employee.fullName}">${employee.fullName}</a></td>
             <td>${employee.totalPercentAllocated}</td>
-            <td><a href="searchAlloc?searchquery=${employee.fullName}">
+          <%--  <td><a href="searchAlloc?searchquery=${employee.fullName}">
                 <img
                     alt="Edit" width="85" height="29"
                     src="<c:url value="/resources/images/srchBut.png"/>"
-                    class="srchlink" /></a>
+                    class="srchlink" /></a>--%>
         </tr>
     </c:forEach>
     </tbody>
@@ -97,6 +101,7 @@
     <tr><th class="sorttable_nosort" colspan="9">  </th></tr>
     </tfoot>
 </table>
+</div>
     <%@include file="/WEB-INF/jsp/footer.jsp"%>
 </body>
 </html>

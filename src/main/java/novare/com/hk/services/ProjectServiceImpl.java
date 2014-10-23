@@ -1,6 +1,5 @@
 package novare.com.hk.services;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,20 +79,5 @@ public class ProjectServiceImpl implements ProjectService {
         }
         return projectList;
     }
-
-    @Transactional
-	public List<Project> getReport(Date dateParam, Date endDateParam) {
-		// Both start date and end date is not empty
-		if(dateParam != null && endDateParam != null){
-			return projectRepository.generateReport(dateParam, endDateParam);
-		}
-		// When only start date has a value and end date is empty/null.
-		else if(dateParam != null && endDateParam == null){
-			return projectRepository.generateReport(dateParam);
-		}
-		else{
-			return projectRepository.findAll();
-		}
-	}
 
 }

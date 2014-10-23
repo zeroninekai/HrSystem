@@ -20,33 +20,7 @@ public class AllocationServiceImpl implements AllocationService{
 
 	@Transactional
 	public void insertData(Allocation allocation) throws Exception {
-        // If inputted allocation percent value is > 100 or < 0
-/*        if (allocation.getPercent() > 100 || allocation.getPercent() < 0) {
-            throw new Exception("Invalid percentage");
-        }
-        // checks if the user has already another allocation
-        // if there is, it checks if the value inputted by the user plus the
-        // employee's existing value for allocation exceeds 100; which should not be
-        else {*/
-/*            List<Allocation> allocationStorage = allocationRepository.findAll();
-            int totalPercent = 0;
-            for (Allocation a : allocationStorage) {
-                if(a.getEmployee().getId() == allocation.getEmployee().getId() && a.getProject().getId() == allocation.getProject().getId())
-                    throw new Exception("Employee is already allocated to that same project you are trying to input");
-                // checks if the employee the user is trying to add has an existing entry in allocations db
-                if (a.getEmployee().getId() == allocation.getEmployee().getId()) { //matches or check if allocation's emp ID stored from database is equal to user input allocation emp id which was binded to a dropbox as a name
-                    totalPercent += a.getPercent();
-                }
-            } // end for-loop
-            totalPercent += allocation.getPercent();
-            if (totalPercent > 100) {
-                System.out.println("Cannot add employee if more than allocated 100 percent!!!!");
-                throw new Exception("Cannot insert if allocation is more than 100 percent!");
-            }
-            // if no exceptions, below code will execute
-            System.out.println("Saved! :" + totalPercent);*/
             allocationRepository.save(allocation);
-        //}
     }
 
 	@Transactional
@@ -56,38 +30,7 @@ public class AllocationServiceImpl implements AllocationService{
 
 	@Transactional
 	public void updateData(Allocation allocation) throws Exception {
-        // If inputted allocation percent value is > 100 or < 0
-        /*if (allocation.getPercent() > 100 || allocation.getPercent() < 0) {
-            throw new Exception("Invalid percentage");
-        }*/
-        // checks if the user has already another allocation
-        // if there is, it checks if the value inputted by the user plus the
-        // employee's existing value for allocation exceeds 100; which should not be
-        //else {
-            /*List<Allocation> allocationStorage = allocationRepository.findAll();
-            int totalPercent = 0;
-            for (Allocation a : allocationStorage) {
-                // matches or check if allocation's emp ID stored from database is equal to user selected allocation emp id
-                // which was binded to employee name; this is to see if employee exists/has an existing allocation
-                // if there is an existing allocation for the employee, it sums up all the allocation of employee to see if it is valid or <= 100.
-                if (a.getEmployee().getId() == allocation.getEmployee().getId()) {
-                    // if the allocation.project id from database matches the allocation.project id the user is currently editing
-                    // it should not add the total of the percent he is currently editing because he will update its value
-                    if(a.getProject().getId() != allocation.getProject().getId()){
-                        System.out.println("Total Percent: " + totalPercent +"+"+ a.getPercent());
-                        totalPercent += a.getPercent();
-                    }
-                } // end outer-if
-            } // end for-loop
-            totalPercent += allocation.getPercent();
-            System.out.println("Total Percent Final: " + (totalPercent));
-            if (totalPercent > 100) {
-                throw new Exception("Cannot update employee if more than allocated 100 percent!!!!");
-            }*/
-            // if no exceptions, below code will execute
-            System.out.println("!!----Saved----!!");
             allocationRepository.save(allocation);
-        //}
 	}
 
 	@Transactional

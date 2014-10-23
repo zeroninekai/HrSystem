@@ -115,19 +115,25 @@ div.pListboard{
     margin-bottom: 30px;
 }
 
+div.board2{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
 table.m#projectListCost{
-    display: inline-block;
-    width: 25%;
+    display: inline-table;
+    margin-right: 2%;
+    width: 33%;
 }
 table.m#projectListAlloc{
-    display: inline-block;
-    width: 25%;
+    display: inline-table;
+    width: 33%;
 }
 
 table.m#employeeExceededAllocs{
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+    display: inline-table;
+    width: 33%;
+    margin-right: 35%;
 }
 table.sortable tbody tr:nth-child(even) td
 {
