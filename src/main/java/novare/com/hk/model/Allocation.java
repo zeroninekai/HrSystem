@@ -27,7 +27,7 @@ public class Allocation {
 	@JoinColumn(name = "project_id")
 	private Project project;
 
-	private int percent;
+	private double percent;
 
 	@Temporal(TemporalType.DATE)
 	private Date start_date;
@@ -65,7 +65,7 @@ public class Allocation {
 		return id;
 	}
 
-	public int getPercent() {
+	public double getPercent() {
 		return percent;
 	}
 
@@ -105,7 +105,7 @@ public class Allocation {
 		this.id = id;
 	}
 
-	public void setPercent(int percent) {
+	public void setPercent(double percent) {
 		this.percent = percent;
 	}
 

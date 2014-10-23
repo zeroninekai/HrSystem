@@ -143,9 +143,24 @@ img.addAlloclink:active
 	content: url(../images/addAllocPush.png);
 }
 
+img.srchlink:link
+{
+    content: url(../images/srchBut.png);
+}
+
+img.srchlink:hover
+{
+    content: url(../images/srchButHover.png);
+}
+
+img.srchlink:active
+{
+    content: url(../images/srchButPush.png);
+}
+
 /* Old Category Buttons */
 
-/* 
+/*
 img.empIcon:link
 {
 	content: url(../images/empBut.png);

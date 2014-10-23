@@ -51,7 +51,37 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectRepository.filterProject(project_name);
 	}
 
-	@Transactional
+    @Transactional
+    public List<Project> indexProjectCost(List<Project> projectList) {
+        projectList.clear();
+        List<Object[]> rows = projectRepository.viewProjectsCost();
+        if(rows != null){
+            for(Object[] row: rows){
+                Project p = new Project();
+                p.setProject_name(row[0].toString());
+                p.setDailyCost(Double.parseDouble(row[1].toString()));
+                projectList.add(p);
+            }
+        }
+        return projectList;
+    }
+
+    @Override
+    public List<Project> indexProjectAlloc(List<Project> projectList) {
+        projectList.clear();
+        List<Object[]> rows = projectRepository.viewProjectsAllocation();
+        if(rows != null){
+            for(Object[] row: rows){
+                Project p = new Project();
+                p.setProject_name(row[0].toString());
+                p.setTotalAllocation(Double.parseDouble(row[1].toString()));
+                projectList.add(p);
+            }
+        }
+        return projectList;
+    }
+
+    @Transactional
 	public List<Project> getReport(Date dateParam, Date endDateParam) {
 		// Both start date and end date is not empty
 		if(dateParam != null && endDateParam != null){
@@ -66,16 +96,4 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 	}
 
-    @Override
-    public List<Object[]> genReport(Date start_date, Date end_date) {
-        if(start_date != null && end_date == null){
-            return projectRepository.genReport(start_date);
-        }
-        else if(start_date != null && end_date != null){
-            return projectRepository.genReport(start_date, end_date);
-        }
-        else{
-            return null;
-        }
-    }
 }

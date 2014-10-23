@@ -53,6 +53,28 @@ public class Employee {
 	@Transient
 	private String filterStat;
 
+    @Transient
+    private String fullName;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public double getTotalPercentAllocated() {
+        return totalPercentAllocated;
+    }
+
+    public void setTotalPercentAllocated(double totalPercentAllocated) {
+        this.totalPercentAllocated = totalPercentAllocated;
+    }
+
+    @Transient
+    private double totalPercentAllocated;
+
 	public List<Allocation> getAllocations() {
 		return allocations;
 	}

@@ -16,7 +16,9 @@ public interface AllocationRepository extends JpaRepository<Allocation, Integer>
 
 	@Query("SELECT a FROM Allocation a WHERE LOWER(project.project_name) LIKE CONCAT('%',:search_param,'%')"
 			+ " OR LOWER(employee.fname) LIKE CONCAT('%',:search_param,'%')"
-			+ " OR LOWER(employee.lname) LIKE CONCAT('%',:search_param,'%')")
+			+ " OR LOWER(employee.lname) LIKE CONCAT('%',:search_param,'%')"
+            + " OR CONCAT(LOWER(employee.fname), ' ', LOWER(employee.lname))"
+            + " LIKE CONCAT('%',:search_param,'%')")
 	public List<Allocation> searchAllocation(@Param("search_param") String search_param);
 
 	@Query(value="SELECT p.project_name AS project_name, " +
@@ -71,10 +73,10 @@ public interface AllocationRepository extends JpaRepository<Allocation, Integer>
 	public List<Object[]> generatePdf(Date startDateParam, Date endDateParam);
 
 
-    @Query(value="SELECT p.project_name AS project_name, " +
-            "COUNT(alloc.employee.id) " +
-            "from Allocation alloc " +
-            "INNER JOIN alloc.project as p " +
-            "GROUP BY p.id")
-    public List<Object[]> homeList();
+    @Query(value="SELECT CONCAT(a.employee.fname,' ',a.employee.lname)," +
+            "SUM(a.percent) " +
+            "FROM Allocation a " +
+            "GROUP BY a.employee.id " +
+            "HAVING SUM(a.percent) > 100 ")
+    public List<Object[]> viewExceededAllocation();
 }

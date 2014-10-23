@@ -20,7 +20,7 @@ public interface ProjectService {
 
 	public List<Project> filterProject(String project_name);
 
-	public List<Project> getReport(Date dateParam, Date endDateParam);
+    public List<Project> indexProjectCost (List<Project> projectList);
 
-    public List<Object[]> genReport(Date start_date, Date end_date);
+    public List<Project> indexProjectAlloc (List<Project> projectList);
 }
