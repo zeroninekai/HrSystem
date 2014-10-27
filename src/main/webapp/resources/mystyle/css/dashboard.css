@@ -135,6 +135,10 @@ table.m#employeeExceededAllocs{
     width: 33%;
     margin-right: 35%;
 }
+
+.m#iChart{
+
+}
 table.sortable tbody tr:nth-child(even) td
 {
     text-align: center;

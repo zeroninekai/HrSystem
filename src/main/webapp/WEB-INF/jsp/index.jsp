@@ -101,6 +101,7 @@
     <tr><th class="sorttable_nosort" colspan="9">  </th></tr>
     </tfoot>
 </table>
+    <img src="/viewChart" class="m" id="iChart"/>
 </div>
     <%@include file="/WEB-INF/jsp/footer.jsp"%>
 </body>
