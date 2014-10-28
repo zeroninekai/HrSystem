@@ -23,7 +23,7 @@ body
     background: -moz-linear-gradient(/* #bdc3c7 */ #2980b9 10%, #ecf0f1 14%,  #ecf0f1 76%);
     background: linear-gradient(/* #bdc3c7 */ #2980b9 10%, #ecf0f1 14%, #ecf0f1 76%);
     /* background-color: #ecf0f1;#8e8e8e; */
-    color: #000000;
+    /*color: #000000;*/
 
     font-family: "Calibri";
     font-size: 1em;
@@ -133,12 +133,23 @@ table.m#projectListAlloc{
 table.m#employeeExceededAllocs{
     display: inline-table;
     width: 33%;
-    margin-right: 35%;
 }
 
 .m#iChart{
-
+    margin-bottom: 1.5%
 }
+div.containert{
+    text-align: center;
+}
+
+div#left{
+    display:inline-block;
+    margin-right: 20%;
+}
+div#right{
+    display:inline-block;
+}
+
 table.sortable tbody tr:nth-child(even) td
 {
     text-align: center;

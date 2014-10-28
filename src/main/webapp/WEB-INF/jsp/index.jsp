@@ -32,7 +32,9 @@
 </div>
 <br />
 <div class="pListboard">
-<table class="m" id="projectListCost">
+    <img src="/viewChart" class="m" id="iChart"/>
+
+    <table class="m" id="projectListCost">
     <thead>
     <tr>
         <th>Project Name</th>
@@ -72,13 +74,14 @@
     </tfoot>
 </table>
 </div>
-<div class="board2">
+
+<div style="text-align: center;">
 <table class="m" id="employeeExceededAllocs">
     <thead>
     <tr>
         <th>Employee</th>
         <th>Allocation</th>
-     <%--   <th>Controls</th>--%>
+        <%--   <th>Controls</th>--%>
     </tr>
     </thead>
     <tbody>
@@ -89,11 +92,11 @@
         <tr>
             <td><a href="searchAlloc?searchquery=${employee.fullName}">${employee.fullName}</a></td>
             <td>${employee.totalPercentAllocated}</td>
-          <%--  <td><a href="searchAlloc?searchquery=${employee.fullName}">
-                <img
-                    alt="Edit" width="85" height="29"
-                    src="<c:url value="/resources/images/srchBut.png"/>"
-                    class="srchlink" /></a>--%>
+                <%--  <td><a href="searchAlloc?searchquery=${employee.fullName}">
+                      <img
+                          alt="Edit" width="85" height="29"
+                          src="<c:url value="/resources/images/srchBut.png"/>"
+                          class="srchlink" /></a>--%>
         </tr>
     </c:forEach>
     </tbody>
@@ -101,8 +104,9 @@
     <tr><th class="sorttable_nosort" colspan="9">  </th></tr>
     </tfoot>
 </table>
-    <img src="/viewChart" class="m" id="iChart"/>
 </div>
+
     <%@include file="/WEB-INF/jsp/footer.jsp"%>
+<br/>
 </body>
 </html>
