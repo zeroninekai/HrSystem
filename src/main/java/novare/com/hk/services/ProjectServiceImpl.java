@@ -201,7 +201,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         BlockContainer blockcontainer = new BlockContainer(new BorderArrangement());
         blockcontainer.add(legendtitle, RectangleEdge.LEFT);
-        blockcontainer.add(legendtitle1, RectangleEdge.RIGHT);
+        //blockcontainer.add(legendtitle1, RectangleEdge.RIGHT);
         blockcontainer.add(new EmptyBlock(2000D, 0.0D));
 
         CompositeTitle compositetitle = new CompositeTitle(blockcontainer);

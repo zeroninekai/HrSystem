@@ -2,9 +2,12 @@
          pageEncoding="ISO-8859-1"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 
 <html>
+<%--Set currency type to Philippine peso for formatting data--%>
+<fmt:setLocale value="fil_PH" scope="session"/>
 <head>
     <title>Home - Resource Management System</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
@@ -34,18 +37,18 @@
 <div class="pListboard">
     <img src="/viewChart" class="m" id="iChart"/>
 
-    <table class="m" id="projectListCost">
+    <table class="m" id="projectListCost" cellspacing="0">
     <thead>
     <tr>
-        <th>Project Name</th>
-        <th>Total Cost</th>
+        <th class="leftSide">Project Name</th>
+        <th class="rightSideOfProjs">Total Cost</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="project" items="${map.projectList}">
         <tr>
-            <td>${project.project_name}</td>
-            <td>Php ${project.dailyCost}</td>
+            <td class="leftSide">${project.project_name}</td>
+            <td class="rightSideOfProjs"><fmt:formatNumber value="${project.dailyCost}" type="currency"/></td>
         </tr>
     </c:forEach>
     </tbody>
@@ -54,18 +57,18 @@
     </tfoot>
 </table>
 
-<table class="m" id="projectListAlloc">
+<table class="m" id="projectListAlloc" cellspacing="0">
     <thead>
     <tr>
-        <th>Project Name</th>
-        <th>Allocations</th>
+        <th class="leftSide">Project Name</th>
+        <th class="rightSideOfProjs">Allocations</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="project" items="${map.projectListAlloc}">
         <tr>
-            <td>${project.project_name}</td>
-            <td>${project.totalAllocation}</td>
+            <td class="leftSide">${project.project_name}</td>
+            <td class="rightSideOfProjs">${project.totalAllocation}</td>
         </tr>
     </c:forEach>
     </tbody>
@@ -76,11 +79,11 @@
 </div>
 
 <div style="text-align: center;">
-<table class="m" id="employeeExceededAllocs">
+<table class="m" id="employeeExceededAllocs" cellspacing="0">
     <thead>
     <tr>
-        <th>Employee</th>
-        <th>Allocation</th>
+        <th class="leftSide">Employee</th>
+        <th class="rightSideOfProjs">Allocation</th>
         <%--   <th>Controls</th>--%>
     </tr>
     </thead>
@@ -90,9 +93,9 @@
     </c:if>
     <c:forEach var="employee" items="${map.employeeExceededList}">
         <tr>
-            <td><a href="searchAlloc?searchquery=${employee.fullName}">${employee.fullName}</a></td>
-            <td>${employee.totalPercentAllocated}</td>
-                <%--  <td><a href="searchAlloc?searchquery=${employee.fullName}">
+            <td class="leftSide"><a href="searchAlloc?searchquery=${employee.fullName}">${employee.fullName}</a></td>
+            <td class="rightSideOfProjs">${employee.totalPercentAllocated}</td>
+                <%--IMAGE for search  <td><a href="searchAlloc?searchquery=${employee.fullName}">
                       <img
                           alt="Edit" width="85" height="29"
                           src="<c:url value="/resources/images/srchBut.png"/>"

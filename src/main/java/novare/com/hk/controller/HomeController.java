@@ -62,7 +62,7 @@ public class HomeController {
         try {
             response.setContentType("image/jpeg");
             OutputStream out = response.getOutputStream();
-            ChartUtilities.writeChartAsJPEG(out, projectService.createChart(projectList,projectListAlloc),900,380);
+            ChartUtilities.writeChartAsJPEG(out, projectService.createChart(projectList,projectListAlloc),900,360);
         }
         catch(Exception e){
             System.out.println("error viewchart: " + e.getMessage());

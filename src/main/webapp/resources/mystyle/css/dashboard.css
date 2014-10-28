@@ -110,6 +110,11 @@ table
     border: 0px 0px 0px 0px;
 }
 
+table .m{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
 div.pListboard{
     text-align: center;
     margin-bottom: 30px;
@@ -125,6 +130,22 @@ table.m#projectListCost{
     margin-right: 2%;
     width: 33%;
 }
+
+table.m td.leftSide, table.m th.leftSide{
+    text-align: left;
+}
+
+table.m td.rightSideOfProjs, table.m th.rightSideOfProjs{
+    text-align: right;
+}
+
+table.m tr, table.m td, table.m th{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+
 table.m#projectListAlloc{
     display: inline-table;
     width: 33%;
